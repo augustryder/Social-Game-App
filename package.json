@@ -4,15 +4,20 @@
   "description": "Social Game web app for CSCI-3321",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:css": "postcss public/styles/tailwind.css -o public/styles/style.css"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tailwindcss/cli": "^4.0.14",
+    "autoprefixer": "^10.4.21",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "mysql2": "^3.13.0"
+    "mysql2": "^3.13.0",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.0.14"
   }
 }
