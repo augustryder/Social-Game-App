@@ -4,11 +4,11 @@ const bcrypt = require('bcrypt');
 
 
 // App Logic Functions and Such
-async function home(req, res) {
+async function guesthome(req, res) {
     try {
         const connection = await pool.getConnection();
         console.log('Connection made to database!!');
-        res.render('pages/home');
+        res.render('pages/guesthome');
         connection.release();
     } catch (err) { 
         console.log(err);
@@ -109,6 +109,7 @@ async function register(req, res) {
 
 async function login(req, res) {
     try {
+        const connection = await pool.getConnection();
         const { username, password } = req.body;
         
         // Basic validation
@@ -120,7 +121,7 @@ async function login(req, res) {
         }
         
         // Check if user exists
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT * FROM users WHERE username = ?', 
             [username]
         );
@@ -143,8 +144,14 @@ async function login(req, res) {
                 username
             });
         }
+
+        // Set session data
+        req.session.userId = user.id;
+        req.session.username = user.username;
+        req.session.isLoggedIn = true;
+        
         // Redirect to home page
-        res.redirect('/home');
+        res.redirect('/main');
     } catch (error) {
         console.error('Login error:', error);
         res.render('pages/login', {
@@ -154,11 +161,50 @@ async function login(req, res) {
     }
 }
 
+async function logout(req, res) {
+    // Destroy the session
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error during logout:', err);
+            return res.status(500).send('An error occurred during logout');
+        }
+        
+        // Redirect to the login page after logout
+        res.redirect('/');
+    });
+}
+
+async function main(req, res) {
+    try {
+        // Access session data
+        const { username, userId } = req.session;
+        
+        // You can fetch additional user data from the database if needed
+        // For example:
+        // const userData = await connection.query('SELECT * FROM user_profiles WHERE user_id = ?', [userId]);
+        
+        // Render the main page with the session data
+        res.render('pages/main', { 
+          username,
+          userId,
+          title: 'Social Circle - Main'
+          // Add any other data you want to pass to the template
+        });
+      } catch (error) {
+        console.error('Error rendering main page:', error);
+        res.status(500).render('pages/error', { 
+          error: 'An error occurred while loading the main page' 
+        });
+      }
+}
+
 module.exports = {
-    home,
+    guesthome,
     showLogin,
     showRegister,
     register,
-    login
+    login,
+    logout,
+    main
 };
 
