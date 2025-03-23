@@ -2,29 +2,37 @@
 <div class="center-container">
     <div class="login-box">
         <h1>REGISTER</h1>
-
-        <div class="input-field">
-            <label for="username">EMAIL:</label>
-            <input type="text" id="email" name="email">
-        </div>
         
-        <div class="input-field">
-            <label for="username">USERNAME:</label>
-            <input type="text" id="username" name="username">
-        </div>
+        <% if (locals.error) { %>
+            <div style="color: #ff5555; margin-bottom: 15px; font-family: monospace; font-size: 14px;">
+                <%= error %>
+            </div>
+        <% } %>
         
-        <div class="input-field">
-            <label for="password">PASSWORD:</label>
-            <input type="password" id="password" name="password">
-        </div>
-        
-        <div class="login-button">
-            <button type="submit">[ REGISTER ]</button>
-        </div>
-        <div class="register-link">
-            <span>ALREADY HAVE AN ACCOUNT?</span>
-            <a href="/">LOGIN HERE</a>
-        </div>
+        <form action="/register" method="POST">
+            <div class="input-field">
+                <label for="email">EMAIL:</label>
+                <input type="text" id="email" name="email" value="<%= locals.email || '' %>">
+            </div>
+            
+            <div class="input-field">
+                <label for="username">USERNAME:</label>
+                <input type="text" id="username" name="username" value="<%= locals.username || '' %>">
+            </div>
+            
+            <div class="input-field">
+                <label for="password">PASSWORD:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            
+            <div class="login-button">
+                <button type="submit">[ REGISTER ]</button>
+            </div>
+            <div class="register-link">
+                <span>ALREADY HAVE AN ACCOUNT?</span>
+                <a href="/">LOGIN HERE</a>
+            </div>
+        </form>
     </div>
 </div>
 

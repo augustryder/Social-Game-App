@@ -9,6 +9,11 @@ const port = 3000;
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
+
+
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
