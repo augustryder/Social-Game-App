@@ -9,4 +9,7 @@ router.get('/register', controller.showRegister);
 
 //POST REGISTRATION FORM
 router.post('/register', controller.register);
+
+//POST LOGIN FORM
+router.post('/login', controller.login);
 exports.router = router;

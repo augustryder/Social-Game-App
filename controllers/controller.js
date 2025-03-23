@@ -107,10 +107,58 @@ async function register(req, res) {
     }
 }
 
+async function login(req, res) {
+    try {
+        const { username, password } = req.body;
+        
+        // Basic validation
+        if (!username || !password) {
+            return res.render('pages/login', { 
+                error: 'Username and password are required',
+                username
+            });
+        }
+        
+        // Check if user exists
+        const [rows] = await pool.query(
+            'SELECT * FROM users WHERE username = ?', 
+            [username]
+        );
+        
+        const user = rows[0];
+        
+        if (!user) {
+            return res.render('pages/login', { 
+                error: 'Invalid username or password',
+                username
+            });
+        }
+        
+        // Compare passwords
+        const match = await bcrypt.compare(password, user.password);
+        
+        if (!match) {
+            return res.render('pages/login', { 
+                error: 'Invalid username or password',
+                username
+            });
+        }
+        // Redirect to home page
+        res.redirect('/home');
+    } catch (error) {
+        console.error('Login error:', error);
+        res.render('pages/login', {
+            error: 'An error occurred during login',
+            username: req.body.username
+        });
+    }
+}
+
 module.exports = {
     home,
     showLogin,
     showRegister,
-    register
+    register,
+    login
 };
 

@@ -3,31 +3,38 @@
     <div class="login-box">
         <h1>LOGIN</h1>
         
-        <div class="input-field">
-            <label for="username">USERNAME:</label>
-            <input type="text" id="username" name="username">
-        </div>
+        <% if (locals.error) { %>
+            <div style="color: #ff5555; margin-bottom: 15px; font-family: monospace; font-size: 14px;">
+                <%= error %>
+            </div>
+        <% } %>
         
-        <div class="input-field">
-            <label for="password">PASSWORD:</label>
-            <input type="password" id="password" name="password">
-        </div>
-        
-        <div class="login-button">
-            <button type="submit">[ LOGIN ]</button>
-        </div>
-        
-        <div class="register-link">
-            <span>NO ACCOUNT?</span>
-            <a href="/register">REGISTER HERE</a>
-        </div>
-        <div class="register-link">
-            <span>DON'T WANT TO CREATE AN ACCOUNT?</span>
-            <a href="/home">PLAY AS GUEST</a>
-        </div>
+        <form action="/login" method="POST">
+            <div class="input-field">
+                <label for="username">USERNAME:</label>
+                <input type="text" id="username" name="username" value="<%= locals.username || '' %>">
+            </div>
+            
+            <div class="input-field">
+                <label for="password">PASSWORD:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            
+            <div class="login-button">
+                <button type="submit">[ LOGIN ]</button>
+            </div>
+            
+            <div class="register-link">
+                <span>NO ACCOUNT?</span>
+                <a href="/register">REGISTER HERE</a>
+            </div>
+            <div class="register-link">
+                <span>DON'T WANT TO CREATE AN ACCOUNT?</span>
+                <a href="/home">PLAY AS GUEST</a>
+            </div>
+        </form>
     </div>
 </div>
-
 <style>
     .center-container {
     display: flex;
