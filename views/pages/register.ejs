@@ -1,0 +1,116 @@
+<%- include('../partials/header') %>
+<div class="center-container">
+    <div class="login-box">
+        <h1>REGISTER</h1>
+        
+        <div class="input-field">
+            <label for="username">USERNAME:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        
+        <div class="input-field">
+            <label for="password">PASSWORD:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        
+        <div class="login-button">
+            <button type="submit">[ REGISTER ]</button>
+        </div>
+        <div class="register-link">
+            <span>ALREADY HAVE AN ACCOUNT?</span>
+            <a href="/login">LOGIN HERE</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; /* Using 90vh instead of 100vh to account for potential header space */
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+    .login-box {
+        background-color: #1a1a2e;
+        border: 1px solid #2a2a40;
+        padding: 25px;
+        width: 300px;
+        text-align: center;
+    }
+    
+    .login-box h1 {
+        color: #4aff8f;
+        font-size: 24px;
+        margin-bottom: 25px;
+        font-family: monospace;
+    }
+    
+    .input-field {
+        background-color: #101020;
+        margin-bottom: 15px;
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .input-field label {
+        color: #5d5dff;
+        font-size: 14px;
+        font-family: monospace;
+    }
+    
+    .input-field input {
+        background-color: transparent;
+        border: none;
+        color: #a0a0a0;
+        font-family: monospace;
+        font-size: 14px;
+        margin-left: 5px;
+        outline: none;
+        width: 60%;
+    }
+    
+    .login-button {
+        margin: 20px 0;
+    }
+    
+    .login-button button {
+        background-color: transparent;
+        border: 2px solid #4aff8f;
+        color: #4aff8f;
+        cursor: pointer;
+        font-family: monospace;
+        font-size: 16px;
+        padding: 8px 20px;
+        transition: background-color 0.3s;
+    }
+    
+    .login-button button:hover {
+        background-color: rgba(74, 255, 143, 0.1);
+    }
+    
+    .register-link {
+        margin-top: 10px;
+        font-size: 14px;
+        font-family: monospace;
+    }
+    
+    .register-link span {
+        color: #8585ad;
+    }
+    
+    .register-link a {
+        color: #5d5dff;
+        margin-left: 5px;
+        text-decoration: none;
+    }
+    
+    .register-link a:hover {
+        color: #4aff8f;
+    }
+</style>

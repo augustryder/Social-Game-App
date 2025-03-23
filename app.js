@@ -15,6 +15,8 @@ app.use(express.static('public'));
 // Require and use the router module
 const router = require('./routes/router').router;
 app.use('/', router);
+app.use('/login', router);
+app.use('/register', router);
 
 // Start the server
 app.listen(port, () => {

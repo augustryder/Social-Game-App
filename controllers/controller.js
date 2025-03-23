@@ -15,7 +15,35 @@ async function test(req, res) {
     }
 }
 
+async function showLogin(req, res) {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Connection made to database!!');
+        res.render('pages/login');
+        connection.release();
+    } catch (err) { 
+        console.log(err);
+        res.send('An error occurred');
+        throw err;
+    }
+}
+
+async function showRegister(req, res) {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Connection made to database!!');
+        res.render('pages/register');
+        connection.release();
+    } catch (err) { 
+        console.log(err);
+        res.send('An error occurred');
+        throw err;
+    }
+}
+
 module.exports = {
-    test
+    test,
+    showLogin,
+    showRegister
 };
 
