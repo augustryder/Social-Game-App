@@ -2,7 +2,7 @@
 const pool = require('../models/database'); // Database pool
 
 // App Logic Functions and Such
-async function test(req, res) {
+async function home(req, res) {
     try {
         const connection = await pool.getConnection();
         console.log('Connection made to database!!');
@@ -42,7 +42,7 @@ async function showRegister(req, res) {
 }
 
 module.exports = {
-    test,
+    home,
     showLogin,
     showRegister
 };
