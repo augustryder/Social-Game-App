@@ -1,129 +1,45 @@
-<%- include('../partials/loginpartial') %>
-<div class="center-container">
-    <div class="login-box">
-        <h1>REGISTER</h1>
-        
-        <% if (locals.error) { %>
-            <div style="color: #ff5555; margin-bottom: 15px; font-family: monospace; font-size: 14px;">
-                <%= error %>
-            </div>
-        <% } %>
-        
-        <form action="/register" method="POST">
-            <div class="input-field">
-                <label for="email">EMAIL:</label>
-                <input type="text" id="email" name="email" value="<%= locals.email || '' %>">
-            </div>
-            
-            <div class="input-field">
-                <label for="username">USERNAME:</label>
-                <input type="text" id="username" name="username" value="<%= locals.username || '' %>">
-            </div>
-            
-            <div class="input-field">
-                <label for="password">PASSWORD:</label>
-                <input type="password" id="password" name="password">
-            </div>
-            
-            <div class="login-button">
-                <button type="submit">[ REGISTER ]</button>
-            </div>
-            <div class="register-link">
-                <span>ALREADY HAVE AN ACCOUNT?</span>
-                <a href="/">LOGIN HERE</a>
-            </div>
-        </form>
+<%- include('../partials/header') %>
+
+    <div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
+        <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h1 class="text-3xl font-bold text-terminal-green text-center mb-8">REGISTER</h1>
+
+            <% if (locals.error) { %>
+                <div class="text-red-500 mb-4 font-mono text-sm text-center">
+                    <%= error %>
+                </div>
+                <% } %>
+
+                    <form action="/register" method="POST">
+                        <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
+                            <label for="email" class="text-terminal-light-gray text-sm font-mono">EMAIL:</label>
+                            <input type="text" id="email" name="email" value="<%= locals.email || '' %>"
+                                class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
+                        </div>
+
+                        <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
+                            <label for="username" class="text-terminal-light-gray text-sm font-mono">USERNAME:</label>
+                            <input type="text" id="username" name="username" value="<%= locals.username || '' %>"
+                                class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
+                        </div>
+
+                        <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
+                            <label for="password" class="text-terminal-light-gray text-sm font-mono">PASSWORD:</label>
+                            <input type="password" id="password" name="password"
+                                class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
+                        </div>
+
+                        <div class="text-center mt-8">
+                            <button type="submit"
+                                class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">REGISTER</button>
+                        </div>
+
+                        <div class="text-center text-terminal-light-gray font-mono mt-4">
+                            <span>ALREADY HAVE AN ACCOUNT?</span>
+                            <a href="/login" class="text-terminal-green hover:underline">LOGIN HERE</a>
+                        </div>
+                    </form>
+        </div>
     </div>
-</div>
 
-<style>
-    .center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 90vh; 
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-    .login-box {
-        background-color: #1a1a2e;
-        border: 1px solid #2a2a40;
-        padding: 25px;
-        width: 300px;
-        text-align: center;
-    }
-    
-    .login-box h1 {
-        color: #4aff8f;
-        font-size: 24px;
-        margin-bottom: 25px;
-        font-family: monospace;
-    }
-    
-    .input-field {
-        background-color: #101020;
-        margin-bottom: 15px;
-        padding: 10px;
-        text-align: left;
-    }
-    
-    .input-field label {
-        color: #5d5dff;
-        font-size: 14px;
-        font-family: monospace;
-    }
-    
-    .input-field input {
-        background-color: transparent;
-        border: none;
-        color: #a0a0a0;
-        font-family: monospace;
-        font-size: 14px;
-        margin-left: 5px;
-        outline: none;
-        width: 60%;
-    }
-    
-    .login-button {
-        margin: 20px 0;
-    }
-    
-    .login-button button {
-        background-color: transparent;
-        border: 2px solid #4aff8f;
-        color: #4aff8f;
-        cursor: pointer;
-        font-family: monospace;
-        font-size: 16px;
-        padding: 8px 20px;
-        transition: background-color 0.3s;
-    }
-    
-    .login-button button:hover {
-        background-color: rgba(74, 255, 143, 0.1);
-    }
-    
-    .register-link {
-        margin-top: 10px;
-        font-size: 14px;
-        font-family: monospace;
-    }
-    
-    .register-link span {
-        color: #8585ad;
-    }
-    
-    .register-link a {
-        color: #5d5dff;
-        margin-left: 5px;
-        text-decoration: none;
-    }
-    
-    .register-link a:hover {
-        color: #4aff8f;
-    }
-</style>
+    <%- include('../partials/footer') %>

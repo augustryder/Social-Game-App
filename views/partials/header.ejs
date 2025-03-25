@@ -10,16 +10,22 @@
 </head>
 
 <body class="bg-terminal-blue-gray text-terminal-light-gray font-retro">
-    <header class="bg-terminal-accent p-4">
+    <header class="bg-terminal-accent p-4 fixed top-0 left-0 w-full z-10">
         <nav class="flex justify-between items-center">
-            <h1>SOCIAL CIRCLE</h1>
+            <h1 class="text-terminal-green">SOCIAL CIRCLE</h1>
             <ul class="flex space-x-4 list-none m-0 p-0">
-                <li><a href="/main" class="text-terminal-light-gray no-underline hover:underline">HOME</a></li>
-                <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">PROFILE</a></li>
-                <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">LEADERBOARD</a></li>
-                <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">SETTINGS</a></li>
-                <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">LOGOUT</a></li>
+                <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">HOME</a></li>
+                <% if (locals.isLoggedIn) { %>
+                    <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">PROFILE</a></li>
+                    <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">SETTINGS</a></li>
+                    <li><a href="/logout" class="text-terminal-light-gray no-underline hover:underline">LOGOUT</a></li>
+                    <% } else { %>
+                        <li><a href="/login" class="text-terminal-light-gray no-underline hover:underline">LOGIN</a>
+                        </li>
+                        <% } %>
+                            <li><a href="/characters"
+                                    class="text-terminal-light-gray no-underline hover:underline">CHARACTERS</a></li>
             </ul>
         </nav>
     </header>
-    <main>
+    <main class="pt-16">

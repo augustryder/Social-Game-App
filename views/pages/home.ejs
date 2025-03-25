@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+
+    <div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
+        <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-4xl">
+            <div class="username-container text-center mb-8">
+                <h1 class="text-3xl font-bold text-terminal-green">
+                    <% if (username) { %>
+                        Welcome, <%= username %>!
+                            <% } else { %>
+                                Greetings, guest.
+                                <% } %>
+                </h1>
+            </div>
+
+            <div class="game-container">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md">
+                        <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_01</div>
+                        <div class="circle-content space-y-2">
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_01</div>
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_02</div>
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_03</div>
+                        </div>
+                    </div>
+
+                    <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md">
+                        <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_02</div>
+                        <div class="circle-content space-y-2">
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_01</div>
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_02</div>
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_03</div>
+                        </div>
+                    </div>
+
+                    <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md">
+                        <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_03</div>
+                        <div class="circle-content space-y-2">
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_01</div>
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_02</div>
+                            <div class="friend-entry text-terminal-light-gray">> FRIEND_03</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-container text-center mt-8">
+                    <button
+                        class="start-button bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">[
+                        START GAME ]</button>
+                </div>
+            </div>
+
+            <p class="text-terminal-light-gray text-sm font-mono text-center px-4 mt-4">
+
+                <% if (!username) { %>
+                    // Playing in guest mode means
+                    your progress will NOT be saved! //!
+                    <% }%>
+            </p>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>

@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center text-terminal-green mb-8">Characters</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <% characters.forEach(character=> { %>
+                <div class="bg-terminal-accent p-4 rounded-lg shadow-lg text-center">
+                    <a href="/characters/<%= character.c_id %>">
+                        <img src="<%= character.image %>" alt="<%= character.name %>"
+                            class="w-full h-48 object-cover rounded-lg mb-4">
+                        <h2 class="text-xl font-bold text-terminal-light-gray">
+                            <%= character.name %>
+                        </h2>
+                    </a>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
