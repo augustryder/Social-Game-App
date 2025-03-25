@@ -1,4 +1,3 @@
-
 // Require the express module
 const express = require('express');
 const app = express();
@@ -20,11 +19,11 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(session({
-    secret: 'cats', // Change this to a random string
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 3600000 } // Session expires after 1 hour
-  }));
+  secret: 'cats', // Change this to a random string
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 3600000 } // Session expires after 1 hour
+}));
 
 // Require and use the router module
 const router = require('./routes/router').router;
@@ -33,6 +32,8 @@ app.use('/guesthome', router);
 app.use('/register', router);
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+const server = app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
+
+module.exports = { app, server }; // Export the app and server objects for testing
