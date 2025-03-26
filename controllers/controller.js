@@ -152,7 +152,7 @@ async function login(req, res) {
         req.session.isLoggedIn = true;
 
         // Redirect to home page
-        res.redirect('/main');
+        res.redirect('/home');
     } catch (error) {
         console.error('Login error:', error);
         res.render('pages/login', {
@@ -220,29 +220,29 @@ async function showCharacter(req, res) {
     }
 }
 
-async function main(req, res) {
-    try {
-        // Access session data
-        const { username, userId } = req.session;
+// async function main(req, res) {
+//     try {
+//         // Access session data
+//         const { username, userId } = req.session;
 
-        // You can fetch additional user data from the database if needed
-        // For example:
-        // const userData = await connection.query('SELECT * FROM user_profiles WHERE user_id = ?', [userId]);
+//         // You can fetch additional user data from the database if needed
+//         // For example:
+//         // const userData = await connection.query('SELECT * FROM user_profiles WHERE user_id = ?', [userId]);
 
-        // Render the main page with the session data
-        res.render('pages/main', {
-            username,
-            userId,
-            title: 'Social Circle - Main'
-            // Add any other data you want to pass to the template
-        });
-    } catch (error) {
-        console.error('Error rendering main page:', error);
-        res.status(500).render('pages/error', {
-            error: 'An error occurred while loading the main page'
-        });
-    }
-}
+//         // Render the main page with the session data
+//         res.render('pages/main', {
+//             username,
+//             userId,
+//             title: 'Social Circle - Main'
+//             // Add any other data you want to pass to the template
+//         });
+//     } catch (error) {
+//         console.error('Error rendering main page:', error);
+//         res.status(500).render('pages/error', {
+//             error: 'An error occurred while loading the main page'
+//         });
+//     }
+// }
 
 module.exports = {
     home,
@@ -254,6 +254,5 @@ module.exports = {
     showCharacters,
     showCharacter,
     getUsers,
-    main
 };
 
