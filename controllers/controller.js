@@ -147,7 +147,7 @@ async function login(req, res) {
         }
 
         // Set session data
-        req.session.userId = user.id;
+        req.session.userId = user.user_id;
         req.session.username = user.username;
         req.session.isLoggedIn = true;
 
@@ -220,6 +220,50 @@ async function showCharacter(req, res) {
     }
 }
 
+async function showProfile(req, res) {
+    try {
+        if (!req.session || !req.session.userId) {
+            return res.redirect('/login');
+        }
+        const connection = await pool.getConnection();
+        const { userId } = req.session;
+
+        try {
+            // Query the database for user profile information
+            const [rows] = await connection.query(
+                `SELECT username, email, DATE_FORMAT(join_date, '%M %d, %Y') as formatted_join_date, 
+                 high_score, games_played, account_status 
+                 FROM users WHERE user_id = ?`,
+                [userId]
+            );
+
+            if (rows.length === 0) {
+                return res.status(404).send('User not found');
+            }
+
+            // Get user data
+            const userData = rows[0];
+
+            // Render the profile page with user data
+            res.render('pages/profile', {
+                username: userData.username,
+                email: userData.email,
+                joinDate: userData.formatted_join_date,
+                highScore: userData.high_score,
+                gamesPlayed: userData.games_played,
+                accountStatus: userData.account_status
+            });
+        } finally {
+            // Always release the connection back to the pool
+            connection.release();
+        }
+    } catch (err) {
+        console.error('Error in showProfile:', err);
+        res.status(500).send('An error occurred while retrieving profile data');
+    }
+}
+
+
 // async function main(req, res) {
 //     try {
 //         // Access session data
@@ -254,5 +298,6 @@ module.exports = {
     showCharacters,
     showCharacter,
     getUsers,
+    showProfile,
 };
 
