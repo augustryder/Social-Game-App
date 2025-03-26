@@ -179,16 +179,11 @@ async function main(req, res) {
         // Access session data
         const { username, userId } = req.session;
         
-        // You can fetch additional user data from the database if needed
-        // For example:
-        // const userData = await connection.query('SELECT * FROM user_profiles WHERE user_id = ?', [userId]);
-        
-        // Render the main page with the session data
+
         res.render('pages/main', { 
           username,
           userId,
           title: 'Social Circle - Main'
-          // Add any other data you want to pass to the template
         });
       } catch (error) {
         console.error('Error rendering main page:', error);
