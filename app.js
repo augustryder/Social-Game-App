@@ -25,6 +25,11 @@ app.use(session({
   cookie: { maxAge: 3600000 } // Session expires after 1 hour
 }));
 
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = req.session.username ? true : false;
+  next();
+});
+
 // Require and use the router module
 const router = require('./routes/router').router;
 app.use('/', router);
