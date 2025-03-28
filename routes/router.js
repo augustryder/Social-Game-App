@@ -1,7 +1,6 @@
 
 const express = require('express');
 const router = express.Router();
-const { requireLogin } = require('../middleware/auth');
 const controller = require('../controllers/controller');
 
 router.get('/', controller.home);
@@ -11,6 +10,7 @@ router.get('/register', controller.showRegister);
 router.get('/characters', controller.showCharacters);
 router.get('/characters/:id', controller.showCharacter);
 router.get('/users', controller.getUsers);
+router.get('/profile', controller.showProfile);
 
 //POST REGISTRATION FORM
 router.post('/register', controller.register);

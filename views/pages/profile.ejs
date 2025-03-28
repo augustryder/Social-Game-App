@@ -1,0 +1,164 @@
+<%- include('../partials/header') %>
+
+<div class="center-container">
+    <div class="profile-box">
+        <h1>USER_PROFILE</h1>
+        
+        <div class="profile-section">
+            <div class="section-header">USER_DATA</div>
+            <div class="profile-data-container">
+                <div class="profile-data">
+                    <span class="data-label">USERNAME:</span>
+                    <span class="data-value"><%= username %></span>
+                </div>
+                <div class="profile-data">
+                    <span class="data-label">EMAIL:</span>
+                    <span class="data-value"><%= email %></span>
+                </div>
+                <div class="profile-data">
+                    <span class="data-label">JOIN_DATE:</span>
+                    <span class="data-value"><%= joinDate %></span>
+                </div>
+                <div class="profile-data">
+                    <span class="data-label">STATUS:</span>
+                    <span class="data-value"><%= accountStatus %></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="section-header">GAME_STATS</div>
+            <div class="profile-data-container">
+                <div class="profile-data">
+                    <span class="data-label">HIGH_SCORE:</span>
+                    <span class="data-value"><%= highScore %></span>
+                </div>
+                <div class="profile-data">
+                    <span class="data-label">GAMES_PLAYED:</span>
+                    <span class="data-value"><%= gamesPlayed %></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-actions">
+        </div>
+        
+        <div class="back-link">
+            <a href="/home">> RETURN TO HOME</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .profile-box {
+        background-color: #1a1a2e;
+        border: 1px solid #2a2a40;
+        padding: 25px;
+        width: 600px;
+        text-align: center;
+    }
+    
+    .profile-box h1 {
+        color: #4aff8f;
+        font-size: 24px;
+        margin-bottom: 25px;
+        font-family: monospace;
+    }
+    
+    .profile-section {
+        margin-bottom: 25px;
+        text-align: left;
+    }
+    
+    .section-header {
+        background-color: #2a2a40;
+        color: #4aff8f;
+        padding: 10px;
+        font-family: monospace;
+        font-size: 16px;
+        border-left: 4px solid #4aff8f;
+    }
+    
+    .profile-data-container {
+        background-color: #101020;
+        padding: 15px;
+    }
+    
+    .profile-data {
+        margin: 10px 0;
+        font-family: monospace;
+    }
+    
+    .data-label {
+        color: #5d5dff;
+        font-size: 14px;
+        font-family: monospace;
+        display: inline-block;
+        width: 150px;
+    }
+    
+    .data-value {
+        color: #a0a0a0;
+        font-size: 14px;
+        font-family: monospace;
+    }
+    
+    .profile-actions {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px 0 20px;
+    }
+    
+    .action-button {
+        background-color: transparent;
+        border: 2px solid #4aff8f;
+        color: #4aff8f;
+        cursor: pointer;
+        font-family: monospace;
+        font-size: 14px;
+        padding: 8px 15px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+    
+    .action-button:hover {
+        background-color: rgba(74, 255, 143, 0.1);
+    }
+    
+    .delete-btn {
+        border-color: #ff5555;
+        color: #ff5555;
+    }
+    
+    .delete-btn:hover {
+        background-color: rgba(255, 85, 85, 0.1);
+    }
+    
+    .back-link {
+        margin-top: 20px;
+        text-align: left;
+    }
+    
+    .back-link a {
+        color: #5d5dff;
+        font-family: monospace;
+        font-size: 14px;
+        text-decoration: none;
+    }
+    
+    .back-link a:hover {
+        color: #4aff8f;
+    }
+</style>
