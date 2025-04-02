@@ -263,6 +263,24 @@ async function showProfile(req, res) {
     }
 }
 
+async function showLeaderboard(req, res) { 
+    try {
+        const connection = await pool.getConnection();
+        const [leaderboard] = await connection.query(
+            `SELECT username, high_score, games_played
+             FROM users 
+             WHERE account_status = 'active'
+             ORDER BY high_score DESC 
+             LIMIT 10`
+        );
+        res.render('pages/leaderboard', { leaderboard });
+        connection.release();
+    } catch (err) {
+        console.error('Error in showLeaderboard:', err);
+        res.status(500).send('An error occurred while retrieving leaderboard data');
+    }
+}
+
 
 // async function main(req, res) {
 //     try {
@@ -299,5 +317,6 @@ module.exports = {
     showCharacter,
     getUsers,
     showProfile,
+    showLeaderboard
 };
 

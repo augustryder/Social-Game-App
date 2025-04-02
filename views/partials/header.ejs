@@ -18,14 +18,12 @@
                 <% if (locals.isLoggedIn) { %>
                     <li><a href="/profile" class="text-terminal-light-gray no-underline hover:underline">PROFILE</a></li>
                     <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">SETTINGS</a></li>
-                    <li><a href="/" class="text-terminal-light-gray no-underline hover:underline">LEADERBOARD</a></li>
                     <li><a href="/logout" class="text-terminal-light-gray no-underline hover:underline">LOGOUT</a></li>
-                    <% } else { %>
-                        <li><a href="/login" class="text-terminal-light-gray no-underline hover:underline">LOGIN</a>
-                        </li>
-                        <% } %>
-                            <li><a href="/characters"
-                                    class="text-terminal-light-gray no-underline hover:underline">CHARACTERS</a></li>
+                <% } else { %>
+                        <li><a href="/login" class="text-terminal-light-gray no-underline hover:underline">LOGIN</a></li>
+                <% } %>
+                <li><a href="/characters" class="text-terminal-light-gray no-underline hover:underline">CHARACTERS</a></li>
+                <li><a href="/leaderboard" class="text-terminal-light-gray no-underline hover:underline">LEADERBOARD</a></li>
             </ul>
         </nav>
     </header>

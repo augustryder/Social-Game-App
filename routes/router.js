@@ -11,6 +11,7 @@ router.get('/characters', controller.showCharacters);
 router.get('/characters/:id', controller.showCharacter);
 router.get('/users', controller.getUsers);
 router.get('/profile', controller.showProfile);
+router.get('/leaderboard', controller.showLeaderboard);
 
 //POST REGISTRATION FORM
 router.post('/register', controller.register);
