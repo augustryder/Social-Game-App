@@ -5,7 +5,7 @@ USE social_game_db;
 
 -- Create and populate tables and stuff
 
---createing the base user table
+-- Creating the base user table
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
