@@ -12,6 +12,7 @@ router.get('/characters/:id', controller.showCharacter);
 router.get('/users', controller.getUsers);
 router.get('/profile', controller.showProfile);
 router.get('/leaderboard', controller.showLeaderboard);
+router.get('/changeusername', controller.showChangeUsername);
 
 //POST REGISTRATION FORM
 router.post('/register', controller.register);
@@ -21,5 +22,11 @@ router.post('/login', controller.login);
 
 //get logout route
 router.get('/logout', controller.logout);
+
+//post update username
+router.post('/updateUsername', controller.updateUsername);
+
+//delete account
+router.post('/deleteaccount', controller.deleteAccount);
 
 exports.router = router;

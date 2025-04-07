@@ -41,124 +41,171 @@
         </div>
         
         <div class="profile-actions">
-        </div>
+        
         
         <div class="back-link">
             <a href="/home">> RETURN TO HOME</a>
         </div>
+        <div class="back-link">
+            <form id="delete-account-form" action="/deleteaccount" method="POST" style="display: inline;">
+                <button type="submit" class="delete-button">
+                    > DELETE ACCOUNT
+                </button>
+            </form>
+        </div>
+        <div class="back-link">
+            <a href="/changeusername">
+                > CHANGE USERNAME
+            </a>
+        </div>
     </div>
+    <script>
+        document.getElementById('delete-account-form').addEventListener('submit', function(event) {
+            if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                event.preventDefault(); // Prevent form submission if user clicks Cancel
+            }
+        });
+    </script>
 </div>
 
 <style>
-    .center-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 90vh;
-        width: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
-    .profile-box {
-        background-color: #1a1a2e;
-        border: 1px solid #2a2a40;
-        padding: 25px;
-        width: 600px;
-        text-align: center;
-    }
-    
-    .profile-box h1 {
-        color: #4aff8f;
-        font-size: 24px;
-        margin-bottom: 25px;
-        font-family: monospace;
-    }
-    
-    .profile-section {
-        margin-bottom: 25px;
-        text-align: left;
-    }
-    
-    .section-header {
-        background-color: #2a2a40;
-        color: #4aff8f;
-        padding: 10px;
-        font-family: monospace;
-        font-size: 16px;
-        border-left: 4px solid #4aff8f;
-    }
-    
-    .profile-data-container {
-        background-color: #101020;
-        padding: 15px;
-    }
-    
-    .profile-data {
-        margin: 10px 0;
-        font-family: monospace;
-    }
-    
-    .data-label {
-        color: #5d5dff;
-        font-size: 14px;
-        font-family: monospace;
-        display: inline-block;
-        width: 150px;
-    }
-    
-    .data-value {
-        color: #a0a0a0;
-        font-size: 14px;
-        font-family: monospace;
-    }
-    
-    .profile-actions {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px 0 20px;
-    }
-    
-    .action-button {
-        background-color: transparent;
-        border: 2px solid #4aff8f;
-        color: #4aff8f;
-        cursor: pointer;
-        font-family: monospace;
-        font-size: 14px;
-        padding: 8px 15px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-    }
-    
-    .action-button:hover {
-        background-color: rgba(74, 255, 143, 0.1);
-    }
-    
-    .delete-btn {
-        border-color: #ff5555;
-        color: #ff5555;
-    }
-    
-    .delete-btn:hover {
-        background-color: rgba(255, 85, 85, 0.1);
-    }
-    
-    .back-link {
-        margin-top: 20px;
-        text-align: left;
-    }
-    
-    .back-link a {
-        color: #5d5dff;
-        font-family: monospace;
-        font-size: 14px;
-        text-decoration: none;
-    }
-    
-    .back-link a:hover {
-        color: #4aff8f;
-    }
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.profile-box {
+    background-color: #1a1a2e;
+    border: 1px solid #2a2a40;
+    padding: 25px;
+    width: 600px;
+    text-align: center;
+}
+
+.profile-box h1 {
+    color: #4aff8f;
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-family: monospace;
+}
+
+.profile-section {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.section-header {
+    background-color: #2a2a40;
+    color: #4aff8f;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 16px;
+    border-left: 4px solid #4aff8f;
+}
+
+.profile-data-container {
+    background-color: #101020;
+    padding: 15px;
+}
+
+.profile-data {
+    margin: 10px 0;
+    font-family: monospace;
+}
+
+.data-label {
+    color: #5d5dff;
+    font-size: 14px;
+    font-family: monospace;
+    display: inline-block;
+    width: 150px;
+}
+
+.data-value {
+    color: #a0a0a0;
+    font-size: 14px;
+    font-family: monospace;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0 20px;
+}
+
+.action-button {
+    background-color: transparent;
+    border: 2px solid #4aff8f;
+    color: #4aff8f;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 8px 15px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.action-button:hover {
+    background-color: rgba(74, 255, 143, 0.1);
+}
+
+.delete-button {
+    background-color: transparent;
+    border: 2px solid #ff4a4a;
+    color: #ff4a4a;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 8px 15px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: rgba(255, 74, 74, 0.1);
+}
+
+.back-link {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.back-link a {
+    color: #5d5dff;
+    font-family: monospace;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.back-link a:hover {
+    color: #4aff8f;
+}
+
+.back-link button {
+    background-color: transparent;
+    border: none;
+    color: #5d5dff;
+    font-family: monospace;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+}
+
+.back-link button.delete-button {
+    color: #ff4a4a;
+}
+
+.back-link button.delete-button:hover {
+    color: #ff6b6b;
+}
+
 </style>
