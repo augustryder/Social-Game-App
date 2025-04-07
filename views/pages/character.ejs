@@ -4,7 +4,6 @@
         <div class="container mx-auto py-8 flex-grow">
             <div class="bg-terminal-accent p-8 rounded-lg shadow-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                    <!-- Character Description -->
                     <div>
                         <h1 class="text-4xl font-bold text-terminal-green mb-4">
                             <%= character.name %>
@@ -12,28 +11,40 @@
                         <p class="text-terminal-light-gray mb-6">
                             <%= character.description %>
                         </p>
-                        <h2 class="text-2xl font-bold text-terminal-green mb-4">Preferences</h2>
+                        <h2 class="text-2xl font-bold text-terminal-green mb-4">Likes / Dislikes</h2>
                         <table class="table-auto w-full text-terminal-light-gray border-collapse text-sm">
                             <thead>
                                 <tr>
+                                    <th class="text-left px-2 py-1 border-b border-terminal-green">Type</th>
                                     <th class="text-left px-2 py-1 border-b border-terminal-green">Name</th>
-                                    <th class="text-left px-2 py-1 border-b border-terminal-green">Description</th>
+                                    <th class="text-left px-2 py-1 border-b border-terminal-green">Preference</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% preferences.forEach(preference=> { %>
                                     <tr>
                                         <td class="px-2 py-1">
-                                            <%= preference.name %>
+                                            <span class="activity-name" data-description="<%= preference.type %>">
+                                                <img src="/images/<%= preference.type_image %>"
+                                                    alt="<%= preference.type %>" class="w-6 h-6 inline-block mr-2">
+                                            </span>
                                         </td>
                                         <td class="px-2 py-1">
-                                            <%= preference.description %>
+                                            <span class="activity-name"
+                                                data-description="<%= preference.description %>">
+                                                <%= preference.name %>
+                                            </span>
+                                        </td>
+                                        <td class="px-2 py-1">
+                                            <%= preference.value %>
                                         </td>
                                     </tr>
                                     <% }) %>
                             </tbody>
                         </table>
                     </div>
+                    <span id="tooltip"
+                        class="hidden absolute bg-terminal-accent text-terminal-light-gray text-sm p-2 rounded-lg shadow-lg"></span>
 
                     <!-- Character Image -->
                     <div class="flex flex-col items-center">

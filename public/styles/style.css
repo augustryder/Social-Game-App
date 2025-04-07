@@ -189,6 +189,9 @@
   }
 }
 @layer utilities {
+  .absolute {
+    position: absolute;
+  }
   .fixed {
     position: fixed;
   }
@@ -251,6 +254,9 @@
   }
   .grid {
     display: grid;
+  }
+  .hidden {
+    display: none;
   }
   .table {
     display: table;
@@ -316,6 +322,13 @@
       margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
+  .space-x-2 {
+    :where(& > :not(:last-child)) {
+      --tw-space-x-reverse: 0;
+      margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
+      margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
+    }
+  }
   .space-x-4 {
     :where(& > :not(:last-child)) {
       --tw-space-x-reverse: 0;
@@ -362,6 +375,9 @@
   }
   .p-0 {
     padding: calc(var(--spacing) * 0);
+  }
+  .p-2 {
+    padding: calc(var(--spacing) * 2);
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
@@ -482,6 +498,34 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+}
+.dark {
+  --tw-bg-opacity: 1;
+  --tw-text-opacity: 1;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+.dark .bg-terminal-accent {
+  background-color: #4a4a77 !important;
+}
+.dark .text-terminal-green {
+  color: #00FF00 !important;
+}
+.dark .bg-terminal-blue-gray {
+  background-color: #100e1f !important;
+}
+.dark .text-terminal-light-gray {
+  color: #FFFFFF !important;
+}
+#tooltip {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 @property --tw-space-y-reverse {
   syntax: "*";

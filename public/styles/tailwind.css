@@ -1,2 +1,37 @@
 @import "tailwindcss";
 @config "./tailwind.config.js";
+
+.dark {
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+.dark .bg-terminal-accent {
+    background-color: #4a4a77 !important;
+}
+
+.dark .text-terminal-green {
+    color: #00FF00 !important;
+}
+
+.dark .bg-terminal-blue-gray {
+    background-color: #100e1f !important;
+}
+
+.dark .text-terminal-light-gray {
+    color: #FFFFFF !important;
+}
+
+#tooltip {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
