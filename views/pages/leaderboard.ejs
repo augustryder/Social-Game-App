@@ -1,0 +1,49 @@
+
+<%- include('../partials/header') %>
+
+<div class="container min-h-screen mx-auto mt-16">
+    <h1 class="text-3xl font-bold text-center text-terminal-green mb-4">Leaderboard</h1>
+    <table class="bg-terminal-accent p-4 rounded-lg shadow-lg text-center w-full">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Rank</th>
+                <th class="py-2 px-4 border-b">Username</th>
+                <th class="py-2 px-4 border-b">Score</th>
+                <th class="py-2 px-4 border-b">Games Played</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% leaderboard.forEach((entry, index) => { %>
+            <%
+                let backgroundClass = index % 2 === 0 ? 'bg-black-100' : 'bg-terminal-blue-gray';
+                let textColorClass = '';
+                let fontWeightClass = '';
+
+                if (index === 0) { 
+                    textColorClass = 'text-yellow-500'; 
+                    fontWeightClass = 'font-bold';
+                } else if (index === 1) {
+                    textColorClass = 'text-gray-400';  
+                    fontWeightClass = 'font-semibold';
+                } else if (index === 2) {
+                    textColorClass = 'text-orange-700';
+                    fontWeightClass = 'font-medium';
+                } else {
+                    textColorClass = 'text-terminal-light-gray'; 
+                    fontWeightClass = 'font-normal';
+                }
+
+                let rowClasses = `${backgroundClass} ${textColorClass} ${fontWeightClass}`;
+            %>
+            <tr class="<%= rowClasses %>">
+                <td class="py-2 px-4"><%= index + 1 %></td>
+                <td class="py-2 px-4"><%= entry.username %></td>
+                <td class="py-2 px-4"><%= entry.high_score %></td>
+                <td class="py-2 px-4"><%= entry.games_played %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>
