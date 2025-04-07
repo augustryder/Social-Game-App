@@ -17,5 +17,6 @@ module.exports = {
             },
         },
     },
+    darkMode: 'class', // Use a CSS class for 'horn mode'
     plugins: [],
 }

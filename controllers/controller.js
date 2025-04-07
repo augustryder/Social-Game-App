@@ -206,8 +206,29 @@ async function showCharacter(req, res) {
         const connection = await pool.getConnection();
         await connection.query('USE social_game_db');
         const [character] = await connection.query('SELECT * FROM characters WHERE c_id = ?', [req.params.id]);
-        const [preferences] = await connection.query('SELECT * FROM preferences WHERE c_id = ?', [req.params.id]);
+        const [preferences] = await connection.query(`
+    SELECT ai.name, ai.description, p.value, ai.type, at.image AS type_image
+    FROM preferences p
+    JOIN activity_item ai ON p.a_id = ai.a_id
+    JOIN activity_type at ON ai.type = at.name
+    WHERE p.c_id = ?
+`, [req.params.id]);
         connection.release();
+
+        // Edit value to show as a string instead of a number (hide the number)
+        preferences.forEach(preference => {
+            if (preference.value === 1) {
+                preference.value = 'Likes ♥';
+            } else if (preference.value > 1) {
+                preference.value = '♥ Loves ♥';
+            }
+            else if (preference.value === 0) {
+                preference.value = 'Dislikes ✕';
+            } else if (preference.value < 0) {
+                preference.value = '✕ Hates ✕';
+            }
+        });
+
         if (character.length > 0) {
             res.render('pages/character', { character: character[0], preferences });
         } else {
