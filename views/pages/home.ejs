@@ -13,6 +13,16 @@
             </div>
 
             <div class="game-container">
+                <div class="text-center mb-2">
+                    <h2 class="text-xl font-bold text-terminal-green">Current Score: <span id="current-score">0</span>
+                    </h2>
+                </div>
+
+                <div class="text-center mb-4">
+                    <h2 class="text-xl font-bold text-terminal-green">Time Remaining: <span
+                            id="countdown-timer">60</span> seconds</h2>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md">
                         <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_01</div>
@@ -42,19 +52,42 @@
                     </div>
                 </div>
 
+                <div class="text-center mb-4 mt-8">
+                    <form id="game-form">
+                        <label for="activity-type" class="text-terminal-light-gray font-mono">I WANT TO DO A</label>
+                        <select id="activity-type" name="activity-type"
+                            class="bg-terminal-blue-gray text-terminal-light-gray font-mono p-2 rounded-lg">
+                            <option value="food">Food</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="sports">Sports</option>
+                            <option value="crafts">Crafts</option>
+                            <option value="music">Music</option>
+                        </select>
+                        <label for="group" class="text-terminal-light-gray font-mono">ACTIVITY WITH</label>
+                        <select id="group" name="group"
+                            class="bg-terminal-blue-gray text-terminal-light-gray font-mono p-2 rounded-lg">
+                            <option value="circle_01">CIRCLE_01</option>
+                            <option value="circle_02">CIRCLE_02</option>
+                            <option value="circle_03">CIRCLE_03</option>
+                        </select>
+                        <button type="submit"
+                            class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition ml-4">GO</button>
+                    </form>
+                </div>
+
                 <div class="button-container text-center mt-8">
                     <button
                         class="start-button bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">[
                         START GAME ]</button>
                 </div>
+
+
             </div>
 
             <p class="text-terminal-light-gray text-sm font-mono text-center px-4 mt-4">
-
                 <% if (!username) { %>
-                    // Playing in guest mode means
-                    your progress will NOT be saved! //!
-                    <% }%>
+                    // Playing in guest mode means your progress will NOT be saved! //!
+                    <% } %>
             </p>
         </div>
     </div>
