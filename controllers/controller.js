@@ -302,6 +302,122 @@ async function showLeaderboard(req, res) {
     }
 }
 
+async function showChangeUsername(req, res) {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Connection made to database!!');
+        res.render('pages/changeusername');
+        connection.release();
+    } catch (err) {
+        console.log(err);
+        res.send('An error occurred');
+        throw err;
+    }
+}
+
+async function updateUsername(req, res) {
+    try {
+        const connection = await pool.getConnection();
+        const { username, newuser } = req.body;
+        const userId = req.session.userId;
+        
+        // Basic validation
+        if (!newuser) {
+            return res.render('pages/changeusername', {
+                error: 'Please enter a new username',
+                username: req.session.username
+            });
+        }
+        
+        // Check if old username matches session username
+        if (username !== req.session.username) {
+            return res.render('pages/changeusername', {
+                error: 'Current username does not match',
+                username: req.session.username
+            });
+        }
+        
+        // Check if user exists
+        const [rows] = await connection.query(
+            'SELECT * FROM users WHERE user_id = ?',
+            [userId]
+        );
+        
+        const user = rows[0];
+        if (!user) {
+            return res.render('pages/changeusername', {
+                error: 'User not found',
+                username: req.session.username
+            });
+        }
+        
+        // Check if new username is already taken
+        const [existingUsers] = await connection.query(
+            'SELECT * FROM users WHERE username = ? AND user_id != ?',
+            [newuser, userId]
+        );
+        
+        if (existingUsers.length > 0) {
+            return res.render('pages/changeusername', {
+                error: 'Username already taken',
+                username: req.session.username
+            });
+        }
+        
+        // Update username in database
+        await connection.query(
+            'UPDATE users SET username = ? WHERE user_id = ?',
+            [newuser, userId]
+        );
+        
+        // Update session
+        req.session.username = newuser;
+        
+        // Release connection
+        connection.release();
+        
+        // Redirect to profile page with success message
+        req.session.message = 'Username successfully updated';
+        res.redirect('/profile');
+        
+    } catch (error) {
+        console.error('Username update error:', error);
+        res.render('pages/changeusername', {
+            error: 'An error occurred while updating username',
+            username: req.session.username
+        });
+    }
+}
+
+async function deleteAccount(req, res) {
+    try {
+        // Check if user is logged in
+        if (!req.session.userId) {
+            return res.redirect('/login');
+        }
+
+        const connection = await pool.getConnection();
+        
+        // Delete the user from the database
+        await connection.query('DELETE FROM users WHERE user_id = ?', [req.session.userId]);
+        
+        connection.release();
+        
+        // Clear the session
+        req.session.destroy(function(err) {
+            if (err) {
+                console.error('Session destroy error:', err);
+            }
+            // Redirect to home page after successful deletion
+            return res.redirect('/home');
+        });
+    } catch (error) {
+        console.error('Account deletion error:', error);
+        req.session.error = 'Failed to delete account. Please try again later.';
+        return res.redirect('/profile');
+    }
+}
+
 
 // async function main(req, res) {
 //     try {
@@ -338,6 +454,9 @@ module.exports = {
     showCharacter,
     getUsers,
     showProfile,
-    showLeaderboard
+    showLeaderboard,
+    showChangeUsername,
+    updateUsername,
+    deleteAccount
 };
 
