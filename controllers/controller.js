@@ -418,30 +418,88 @@ async function deleteAccount(req, res) {
     }
 }
 
+async function showGame(req, res) {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Connection made to database!!');
+        const username = req.session.username || null; // Get username from session or set to null for guests
+        res.render('pages/game', { username }); // Pass username to template
+        connection.release();
+    } catch (err) {
+        console.log(err);
+        res.send('An error occurred');
+        throw err;
+    }
+}
 
-// async function main(req, res) {
-//     try {
-//         // Access session data
-//         const { username, userId } = req.session;
+const getAllCharactersJSON = async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT c_id, name, image FROM characters');
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching characters:', error);
+        res.status(500).json({ error: 'Failed to fetch characters' });
+    }
+};
 
-//         // You can fetch additional user data from the database if needed
-//         // For example:
-//         // const userData = await connection.query('SELECT * FROM user_profiles WHERE user_id = ?', [userId]);
+const getAllPreferencesJSON = async (req, res) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT p.c_id, a.type, p.value
+            FROM preferences p
+            JOIN activity_item a ON p.a_id = a.a_id
+        `);
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching preferences:', error);
+        res.status(500).json({ error: 'Failed to fetch preferences' });
+    }
+};
 
-//         // Render the main page with the session data
-//         res.render('pages/main', {
-//             username,
-//             userId,
-//             title: 'Social Circle - Main'
-//             // Add any other data you want to pass to the template
-//         });
-//     } catch (error) {
-//         console.error('Error rendering main page:', error);
-//         res.status(500).render('pages/error', {
-//             error: 'An error occurred while loading the main page'
-//         });
-//     }
-// }
+const saveScore = async (req, res) => {
+    // Only process if user is logged in
+    //console.log(req.user);
+    console.log("hitting this");
+
+    
+    const score = parseInt(req.query.score, 10);
+    const userId = req.session.userId
+
+    console.log(score, userId);
+    
+    
+    if (isNaN(score)) {
+        return res.redirect('/game?error=Invalid score');
+    }
+    
+    try {
+        // Get current user data
+        const [users] = await pool.query(
+            'SELECT high_score, games_played FROM users WHERE user_id = ?', 
+            [userId]
+        );
+        
+        if (users.length === 0) {
+            return res.redirect('/game?error=User not found');
+        }
+        
+        const user = users[0];
+        const isHighScore = score > user.high_score;
+        
+        // Update user stats
+        await pool.query(
+            'UPDATE users SET games_played = games_played + 1, high_score = GREATEST(high_score, ?) WHERE user_id = ?',
+            [score, userId]
+        );
+        
+        // Redirect to leaderboard with success message
+        return res.redirect('/leaderboard?success=Score saved' + 
+                           (isHighScore ? '&highscore=true' : ''));
+    } catch (error) {
+        console.error('Error saving score:', error);
+        return res.redirect('/game?error=Failed to save score');
+    }
+};
 
 module.exports = {
     home,
@@ -457,6 +515,10 @@ module.exports = {
     showLeaderboard,
     showChangeUsername,
     updateUsername,
-    deleteAccount
+    deleteAccount,
+    showGame,
+    getAllCharactersJSON,
+    getAllPreferencesJSON,
+    saveScore
 };
 

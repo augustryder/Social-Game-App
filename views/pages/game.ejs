@@ -1,0 +1,456 @@
+<%- include('../partials/header') %>
+
+<div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
+    <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        <div class="username-container text-center mb-8">
+            <h1 class="text-3xl font-bold text-terminal-green">
+                <% if (username) { %>
+                    Welcome, <%= username %>!
+                <% } else { %>
+                    Greetings, guest.
+                <% } %>
+            </h1>
+        </div>
+
+        <div class="game-container">
+            <div class="text-center mb-2">
+                <h2 class="text-xl font-bold text-terminal-green">Current Score: <span id="current-score">0</span></h2>
+            </div>
+
+            <div class="text-center mb-4">
+                <h2 class="text-xl font-bold text-terminal-green">Time Remaining: <span id="countdown-timer">60</span> seconds</h2>
+            </div>
+            <button id="pause-button" class="bg-yellow-500 text-white font-bold py-1 px-3 rounded-lg hover:bg-yellow-600 transition ml-2">
+                Pause
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md" data-circle="circle_01">
+                    <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_01</div>
+                    <div class="circle-content space-y-2">
+                        <!-- Characters will be dynamically populated here -->
+                    </div>
+                </div>
+
+                <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md" data-circle="circle_02">
+                    <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_02</div>
+                    <div class="circle-content space-y-2">
+                        <!-- Characters will be dynamically populated here -->
+                    </div>
+                </div>
+
+                <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md" data-circle="circle_03">
+                    <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_03</div>
+                    <div class="circle-content space-y-2">
+                        <!-- Characters will be dynamically populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-4 mt-8">
+                <form id="game-form">
+                    <label for="activity-type" class="text-terminal-light-gray font-mono">I WANT TO DO A</label>
+                    <select id="activity-type" name="activity-type" class="bg-terminal-blue-gray text-terminal-light-gray font-mono p-2 rounded-lg">
+                        <option value="food">Food</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="sports">Sports</option>
+                        <option value="crafts">Crafts</option>
+                        <option value="music">Music</option>
+                    </select>
+                    <label for="group" class="text-terminal-light-gray font-mono">ACTIVITY WITH</label>
+                    <select id="group" name="group" class="bg-terminal-blue-gray text-terminal-light-gray font-mono p-2 rounded-lg">
+                        <option value="circle_01">CIRCLE_01</option>
+                        <option value="circle_02">CIRCLE_02</option>
+                        <option value="circle_03">CIRCLE_03</option>
+                    </select>
+                    <button type="submit" class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition ml-4">GO</button>
+                </form>
+                <div class="text-center mt-4">
+                    <button id="stop-game" class="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition">[ STOP GAME ]</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div id="game-over-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+            <div class="bg-terminal-accent p-8 rounded-lg shadow-lg max-w-md w-full">
+                <h2 class="text-3xl font-bold text-terminal-green text-center mb-4">GAME OVER</h2>
+                <p class="text-terminal-light-gray text-xl mb-4 text-center">Final Score: <span id="final-score">0</span></p>
+                <p id="high-score-message" class="text-terminal-green text-lg mb-6 text-center">New high score!</p>
+                <div class="flex justify-center">
+                    <button id="close-modal" class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">Check Leaderboard</button>
+                    <button id="home-modal" class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">Go Home</button>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-terminal-light-gray text-sm font-mono text-center px-4 mt-4">
+            <% if (!username) { %>
+                // Playing in guest mode means your progress will NOT be saved! //!
+            <% } %>
+        </p>
+    </div>
+</div>
+<div id="character-tooltip" class="hidden absolute bg-terminal-blue-gray text-terminal-light-gray text-sm p-3 rounded-lg shadow-lg z-50 max-w-xs"></div>
+
+
+    <%- include('../partials/footer') %>
+
+
+<script>
+    // DOM Elements
+    const currentScoreElement = document.getElementById('current-score');
+    const countdownTimerElement = document.getElementById('countdown-timer');
+    const gameForm = document.getElementById('game-form');
+    const circleBoxes = document.querySelectorAll('.circle-box');
+    const gameOverModal = document.getElementById('game-over-modal');
+    const finalScoreElement = document.getElementById('final-score');
+    const highScoreMessage = document.getElementById('high-score-message');
+    const closeModalButton = document.getElementById('close-modal');
+    const goHomeButton = document.getElementById('home-modal');
+    const stopGame = document.getElementById('stop-game');
+    const pauseGame = document.getElementById('pause-button');
+    let isPaused = false;
+
+    // Game state variables
+    let gameActive = true;
+    let currentScore = 0;
+    let timeRemaining = 60;
+    let gameInterval;
+    let characters = [];
+    let activityPreferences = {}; // Maps character IDs to activity type preferences
+    let circles = {
+        circle_01: [],
+        circle_02: [],
+        circle_03: []
+    };
+
+    // Initialize game when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set up event listeners
+        gameForm.addEventListener('submit', handleActivitySubmission);
+        closeModalButton.addEventListener('click', function() {
+            window.location.href = '/leaderboard';
+        });
+        goHomeButton.addEventListener('submit', function() {
+            window.location.href = '/home';
+        });
+        stopGame.addEventListener('click', function() {
+            if (confirm('Are you sure you want to stop the game? Your progress will be lost.')) {
+                window.location.href = '/'; // Go back to home page
+            }
+        });
+        pauseGame.addEventListener('click', togglePause);
+        
+        // Fetch character data
+        fetchGameData();
+        
+        // Start countdown timer
+        startCountdown();
+    });
+
+    function togglePause() {
+        isPaused = !isPaused;
+        const pauseButton = document.getElementById('pause-button');
+        
+        if (isPaused) {
+            // Pause the game
+            clearInterval(gameInterval);
+            pauseButton.textContent = 'Resume';
+            pauseButton.classList.replace('bg-yellow-500', 'bg-green-500');
+            pauseButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-600');
+        } else {
+            // Resume the game
+            startCountdown();
+            pauseButton.textContent = 'Pause';
+            pauseButton.classList.replace('bg-green-500', 'bg-yellow-500');
+            pauseButton.classList.replace('hover:bg-green-600', 'hover:bg-yellow-600');
+        }
+    }
+
+    async function fetchGameData() {
+        try {
+            // Get all characters data
+            console.log('Fetching characters...');
+            const charactersResponse = await fetch('/api/characters');
+            const charactersData = await charactersResponse.json();
+            characters = charactersData;
+            console.log('Characters loaded:', characters);
+            
+            // Get preferences for each character
+            console.log('Fetching preferences...');
+            const preferencesResponse = await fetch('/api/preferences');
+            const preferencesData = await preferencesResponse.json();
+            console.log('Preferences loaded:', preferencesData);
+            
+            // Process preferences into a lookup object
+            activityPreferences = {};
+            
+            preferencesData.forEach(pref => {
+                if (!activityPreferences[pref.c_id]) {
+                    activityPreferences[pref.c_id] = {};
+                }
+                
+                // Store preference by activity type
+                activityPreferences[pref.c_id][pref.type] = pref.value;
+            });
+            
+            console.log('Processed preferences:', activityPreferences);
+            
+            // Initial character shuffle
+            shuffleCharacters();
+            
+        } catch (error) {
+            console.error('Error fetching game data:', error);
+            alert('Error loading game data. Please refresh the page.');
+        }
+    }
+
+    function startCountdown() {
+        // Clear any existing interval first
+        if (gameInterval) {
+            clearInterval(gameInterval);
+        }
+        
+        gameInterval = setInterval(() => {
+            timeRemaining--;
+            countdownTimerElement.textContent = timeRemaining;
+            
+            // Add warning style when time is running low
+            if (timeRemaining <= 10) {
+            countdownTimerElement.classList.add('text-red-500');
+            }
+            
+            if (timeRemaining <= 0) {
+            endGame();
+            }
+        }, 1000);
+    }
+
+    function shuffleCharacters() {
+        // Reset circles
+        circles = {
+            circle_01: [],
+            circle_02: [],
+            circle_03: []
+        };
+        
+        // Create a shuffled copy of characters array
+        const shuffled = [...characters].sort(() => 0.5 - Math.random());
+        
+        // Distribute characters equally among circles (3 per circle)
+        for (let i = 0; i < shuffled.length; i++) {
+            if (i < 3) {
+                circles.circle_01.push(shuffled[i]);
+            } else if (i < 6) {
+                circles.circle_02.push(shuffled[i]);
+            } else {
+                circles.circle_03.push(shuffled[i]);
+            }
+        }
+        
+        // Update UI to display the new character distribution
+        updateCirclesUI();
+    }
+
+    function updateCirclesUI() {
+        Object.keys(circles).forEach(circleKey => {
+            const circleElement = document.querySelector(`.circle-box[data-circle="${circleKey}"]`);
+            const contentElement = circleElement.querySelector('.circle-content');
+            
+            // Clear existing content
+            contentElement.innerHTML = '';
+            
+            // Add character entries
+            circles[circleKey].forEach(character => {
+                const friendEntry = document.createElement('div');
+                friendEntry.className = 'friend-entry text-terminal-light-gray hover:bg-terminal-accent hover:text-white cursor-pointer transition-colors p-1 rounded';
+                friendEntry.textContent = `> ${character.name}`;
+                
+                // Store character ID as data attribute for tooltip
+                friendEntry.dataset.characterId = character.c_id;
+                
+                // Add tooltip event listeners
+                friendEntry.addEventListener('mouseenter', showCharacterTooltip);
+                friendEntry.addEventListener('mouseleave', hideCharacterTooltip);
+                
+                contentElement.appendChild(friendEntry);
+            });
+        });
+    }
+
+    function hideCharacterTooltip() {
+        document.getElementById('character-tooltip').classList.add('hidden');
+    }
+
+    function showCharacterTooltip(event) {
+        const characterId = parseInt(event.target.dataset.characterId);
+        const character = characters.find(c => c.c_id === characterId);
+        const tooltip = document.getElementById('character-tooltip');
+        
+        if (!character) return;
+        
+        // Generate tooltip content
+        let tooltipContent = `<div class="font-bold mb-2">${character.name}</div><div class="mb-2">Preferences:</div>`;
+        
+        // Get this character's preferences
+        const prefs = activityPreferences[characterId];
+        if (prefs) {
+            tooltipContent += '<ul class="space-y-1">';
+            
+            for (const [type, value] of Object.entries(prefs)) {
+                let prefText = '';
+                let colorClass = '';
+                
+                if (value > 0) {
+                    prefText = value > 1 ? 'Loves' : 'Likes';
+                    colorClass = 'text-green-400';
+                } else {
+                    prefText = value < -1 ? 'Hates' : 'Dislikes';
+                    colorClass = 'text-red-400';
+                }
+                
+                tooltipContent += `<li class="${colorClass}">${prefText} ${type}</li>`;
+            }
+            
+            tooltipContent += '</ul>';
+        } else {
+            tooltipContent += '<div>No known preferences</div>';
+        }
+        
+        // Set tooltip content
+        tooltip.innerHTML = tooltipContent;
+        
+        // Position tooltip
+        const rect = event.target.getBoundingClientRect();
+        tooltip.style.left = `${rect.right + 10}px`;
+        tooltip.style.top = `${rect.top}px`;
+        
+        // Show tooltip
+        tooltip.classList.remove('hidden');
+    }
+
+    function handleActivitySubmission(event) {
+        event.preventDefault();
+        
+        if (!gameActive) return;
+        
+        const activityType = document.getElementById('activity-type').value;
+        const selectedCircle = document.getElementById('group').value;
+        
+        // Calculate score for this activity
+        const scoreChange = calculateScore(activityType, selectedCircle);
+        
+        // Update score
+        currentScore += scoreChange;
+        currentScoreElement.textContent = currentScore;
+        
+        // Show score change indicator
+        showScoreChangeIndicator(scoreChange);
+        
+        // Shuffle characters for next round
+        shuffleCharacters();
+    }
+
+    function calculateScore(activityType, selectedCircle) {
+        let roundScore = 0;
+        
+        // Convert activityType to lowercase for case-insensitive comparison
+        const normalizedActivityType = activityType.toLowerCase();
+        
+        // For each character in the selected circle
+        circles[selectedCircle].forEach(character => {
+            // Get character preferences
+            const characterPrefs = activityPreferences[character.c_id];
+            
+            if (characterPrefs) {
+                // Look for the preference (case-insensitive)
+                let prefValue = null;
+                
+                // Check for exact match first
+                if (characterPrefs[activityType] !== undefined) {
+                    prefValue = characterPrefs[activityType];
+                } 
+                // Then check for case-insensitive match
+                else {
+                    for (const [prefType, value] of Object.entries(characterPrefs)) {
+                        if (prefType.toLowerCase() === normalizedActivityType) {
+                            prefValue = value;
+                            break;
+                        }
+                    }
+                }
+                
+                // Add preference value to round score if found
+                if (prefValue !== null) {
+                    roundScore += prefValue;
+                    console.log(`${character.name} ${prefValue > 0 ? 'likes' : 'dislikes'} ${activityType}: ${prefValue}`);
+                }
+            }
+        });
+        
+        console.log(`Round score: ${roundScore}`);
+        return roundScore;
+    }
+
+    function showScoreChangeIndicator(scoreChange) {
+        const indicator = document.createElement('div');
+        indicator.className = 'absolute text-2xl font-bold';
+        indicator.style.zIndex = '100';
+        
+        if (scoreChange > 0) {
+            indicator.textContent = `+${scoreChange}`;
+            indicator.style.color = '#4caf50'; // Green for positive
+        } else if (scoreChange < 0) {
+            indicator.textContent = scoreChange;
+            indicator.style.color = '#f44336'; // Red for negative
+        } else {
+            indicator.textContent = '0';
+            indicator.style.color = '#9e9e9e'; // Gray for zero
+        }
+        
+        // Position near the score display
+        const rect = currentScoreElement.getBoundingClientRect();
+        indicator.style.top = `${rect.top - 20}px`;
+        indicator.style.left = `${rect.left + rect.width / 2}px`;
+        indicator.style.transform = 'translateX(-50%)';
+        
+        document.body.appendChild(indicator);
+        
+        // Animate and remove
+        setTimeout(() => {
+            indicator.style.opacity = '0';
+            indicator.style.top = `${rect.top - 40}px`;
+            indicator.style.transition = 'opacity 0.5s, top 0.5s';
+            
+            setTimeout(() => {
+                document.body.removeChild(indicator);
+            }, 500);
+        }, 50);
+    }
+
+    function endGame() {
+        clearInterval(gameInterval);
+        gameActive = false;
+        
+        // Show final score in modal
+        finalScoreElement.textContent = currentScore;
+        
+        // Check if user is logged in
+        const username = '<%= locals.username %>';
+        if (username) {
+            // Create a link to save score instead of using fetch
+            highScoreMessage.innerHTML = `
+                <a href="/api/save-score?score=${currentScore}" 
+                class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition inline-block">
+                SAVE SCORE
+                </a>`;
+        } else {
+            highScoreMessage.textContent = "Sign in to save your score!";
+        }
+        
+        // Show game over modal
+        gameOverModal.classList.remove('hidden');
+    }
+
+</script>
