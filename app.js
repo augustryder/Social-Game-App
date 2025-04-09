@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 
 const session = require('express-session');
+const cors = require('cors');
+
 
 // Set port
 const port = 3000;
@@ -14,6 +16,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
+app.use(cors({
+  origin: 'http://localhost:3000', // Your frontend origin
+  credentials: true                // Allow cookies / credentials
+}));
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
