@@ -1,35 +1,38 @@
-
 <%- include('../partials/header') %>
 
+<!-- Leaderboard container -->
 <div class="container min-h-screen mx-auto mt-16">
     <h1 class="text-3xl font-bold text-center text-terminal-green mb-4">Leaderboard</h1>
+    <!-- Leaderboard table -->
     <table class="bg-terminal-accent p-4 rounded-lg shadow-lg text-center w-full">
         <thead>
             <tr>
                 <th class="py-2 px-4 border-b">Rank</th>
                 <th class="py-2 px-4 border-b">Username</th>
-                <th class="py-2 px-4 border-b">Score</th>
+                <th class="py-2 px-4 border-b">High Score</th>
                 <th class="py-2 px-4 border-b">Games Played</th>
             </tr>
         </thead>
         <tbody>
             <% leaderboard.forEach((entry, index) => { %>
             <%
+                // Set different styling based on rank
                 let backgroundClass = index % 2 === 0 ? 'bg-black-100' : 'bg-terminal-blue-gray';
                 let textColorClass = '';
                 let fontWeightClass = '';
 
+                // Special styling for top 3 players
                 if (index === 0) { 
-                    textColorClass = 'text-yellow-500'; 
+                    textColorClass = 'text-yellow-500'; // Gold for 1st place
                     fontWeightClass = 'font-bold';
                 } else if (index === 1) {
-                    textColorClass = 'text-gray-400';  
+                    textColorClass = 'text-gray-400';  // Silver for 2nd place
                     fontWeightClass = 'font-semibold';
                 } else if (index === 2) {
-                    textColorClass = 'text-orange-700';
+                    textColorClass = 'text-orange-700'; // Bronze for 3rd place
                     fontWeightClass = 'font-medium';
                 } else {
-                    textColorClass = 'text-terminal-light-gray'; 
+                    textColorClass = 'text-terminal-light-gray'; // Default for other ranks
                     fontWeightClass = 'font-normal';
                 }
 
