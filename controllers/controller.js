@@ -1,9 +1,13 @@
-
+// Import required modules
 const pool = require('../models/database'); // Database pool
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); // Password hashing library
 
 
 // App Logic Functions and Such
+
+/**
+ * Renders the home page
+ */
 async function home(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -18,6 +22,9 @@ async function home(req, res) {
     }
 }
 
+/**
+ * Renders the login page
+ */
 async function showLogin(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -31,6 +38,9 @@ async function showLogin(req, res) {
     }
 }
 
+/**
+ * Renders the registration page
+ */
 async function showRegister(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -44,6 +54,9 @@ async function showRegister(req, res) {
     }
 }
 
+/**
+ * Processes user registration form submission
+ */
 async function register(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -108,6 +121,9 @@ async function register(req, res) {
     }
 }
 
+/**
+ * Processes user login form submission
+ */
 async function login(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -162,6 +178,9 @@ async function login(req, res) {
     }
 }
 
+/**
+ * Logs out a user by destroying their session
+ */
 async function logout(req, res) {
     // Destroy the session
     req.session.destroy((err) => {
@@ -175,6 +194,9 @@ async function logout(req, res) {
     });
 }
 
+/**
+ * Returns a JSON list of all users
+ */
 async function getUsers(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -187,6 +209,9 @@ async function getUsers(req, res) {
     }
 }
 
+/**
+ * Renders the characters listing page
+ */
 async function showCharacters(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -201,6 +226,9 @@ async function showCharacters(req, res) {
     }
 }
 
+/**
+ * Renders a single character's details page
+ */
 async function showCharacter(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -241,6 +269,9 @@ async function showCharacter(req, res) {
     }
 }
 
+/**
+ * Shows the user's profile page with their account information
+ */
 async function showProfile(req, res) {
     try {
         if (!req.session || !req.session.userId) {
@@ -284,6 +315,9 @@ async function showProfile(req, res) {
     }
 }
 
+/**
+ * Displays the top 10 users by high score
+ */
 async function showLeaderboard(req, res) { 
     try {
         const connection = await pool.getConnection();
@@ -302,6 +336,9 @@ async function showLeaderboard(req, res) {
     }
 }
 
+/**
+ * Renders the change username form
+ */
 async function showChangeUsername(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -315,6 +352,9 @@ async function showChangeUsername(req, res) {
     }
 }
 
+/**
+ * Processes a username change request
+ */
 async function updateUsername(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -389,6 +429,9 @@ async function updateUsername(req, res) {
     }
 }
 
+/**
+ * Permanently deletes a user account
+ */
 async function deleteAccount(req, res) {
     try {
         // Check if user is logged in
@@ -418,6 +461,9 @@ async function deleteAccount(req, res) {
     }
 }
 
+/**
+ * Renders the game page
+ */
 async function showGame(req, res) {
     try {
         const connection = await pool.getConnection();
@@ -432,6 +478,9 @@ async function showGame(req, res) {
     }
 }
 
+/**
+ * Returns JSON data of all characters for the game
+ */
 const getAllCharactersJSON = async (req, res) => {
     try {
         const [rows] = await pool.query('SELECT c_id, name, image FROM characters');
@@ -442,6 +491,9 @@ const getAllCharactersJSON = async (req, res) => {
     }
 };
 
+/**
+ * Returns JSON data of all character preferences for the game
+ */
 const getAllPreferencesJSON = async (req, res) => {
     try {
         const [rows] = await pool.query(`
@@ -456,9 +508,11 @@ const getAllPreferencesJSON = async (req, res) => {
     }
 };
 
+/**
+ * Saves a user's game score to their profile
+ */
 const saveScore = async (req, res) => {
     // Only process if user is logged in
-    //console.log(req.user);
     console.log("hitting this");
 
     
@@ -501,6 +555,7 @@ const saveScore = async (req, res) => {
     }
 };
 
+// Export all controller functions
 module.exports = {
     home,
     showLogin,

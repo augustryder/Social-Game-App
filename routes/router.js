@@ -4,7 +4,7 @@ const router = express.Router();
 const controller = require('../controllers/controller');
 const path = require('path');
 
-
+//get the pages
 router.get('/', controller.home);
 router.get('/home', controller.home);
 router.get('/login', controller.showLogin);
@@ -32,9 +32,12 @@ router.post('/updateUsername', controller.updateUsername);
 //delete account
 router.post('/deleteaccount', controller.deleteAccount);
 
+//getting all characters
 router.get('/api/characters', controller.getAllCharactersJSON);
 router.get('/api/preferences', controller.getAllPreferencesJSON);
 
+
+//saving score route
 router.get('/api/save-score', controller.saveScore);
 
 
