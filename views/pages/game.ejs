@@ -124,6 +124,8 @@
         circle_02: [],
         circle_03: []
     };
+    let submitCooldown = false; // Track if submission is in cooldown
+    let cooldownTime = 2000; // Cooldown period in milliseconds (2 seconds)
 
     // Initialize game when page loads
     document.addEventListener('DOMContentLoaded', function() {
@@ -333,10 +335,21 @@
     function handleActivitySubmission(event) {
         event.preventDefault();
         
-        if (!gameActive) return;
+        if (!gameActive || submitCooldown) return;
         
         const activityType = document.getElementById('activity-type').value;
         const selectedCircle = document.getElementById('group').value;
+        const submitButton = gameForm.querySelector('button[type="submit"]');
+        
+        // Apply cooldown
+        submitCooldown = true;
+        
+        // Visual feedback for button
+        const originalText = submitButton.textContent;
+        submitButton.textContent = "Wait...";
+        submitButton.disabled = true;
+        submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+        submitButton.classList.remove('hover:bg-terminal-light-gray');
         
         // Calculate score for this activity
         const scoreChange = calculateScore(activityType, selectedCircle);
@@ -350,6 +363,15 @@
         
         // Shuffle characters for next round
         shuffleCharacters();
+        
+        // Reset button after cooldown
+        setTimeout(() => {
+            submitCooldown = false;
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitButton.classList.add('hover:bg-terminal-light-gray');
+        }, cooldownTime);
     }
 
     function calculateScore(activityType, selectedCircle) {
