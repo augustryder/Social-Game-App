@@ -1,33 +1,41 @@
 <%- include('../partials/header') %>
 
+    <!-- Main container with flex layout -->
     <div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
+        <!-- Login form container -->
         <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-md">
             <h1 class="text-3xl font-bold text-terminal-green text-center mb-8">LOGIN</h1>
 
+            <!-- Error message display (if any) -->
             <% if (locals.error) { %>
                 <div class="text-red-500 mb-4 font-mono text-sm text-center">
                     <%= error %>
                 </div>
                 <% } %>
 
+                    <!-- Login form -->
                     <form action="/login" method="POST">
+                        <!-- Username input field -->
                         <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
                             <label for="username" class="text-terminal-light-gray text-sm font-mono">USERNAME:</label>
                             <input type="text" id="username" name="username" value="<%= locals.username || '' %>"
                                 class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
                         </div>
 
+                        <!-- Password input field -->
                         <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
                             <label for="password" class="text-terminal-light-gray text-sm font-mono">PASSWORD:</label>
                             <input type="password" id="password" name="password"
                                 class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
                         </div>
 
+                        <!-- Submit button -->
                         <div class="text-center mt-8">
                             <button type="submit"
                                 class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">LOGIN</button>
                         </div>
 
+                        <!-- Link to registration page -->
                         <div class="text-center text-terminal-light-gray font-mono mt-4">
                             <span>NO ACCOUNT?</span>
                             <a href="/register" class="text-terminal-green hover:underline">REGISTER HERE</a>

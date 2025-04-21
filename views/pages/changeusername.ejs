@@ -1,28 +1,35 @@
 <%- include('../partials/header') %>
 
+    <!-- Main container with flex layout -->
     <div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
+        <!-- Form container box -->
         <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-md">
             <h1 class="text-3xl font-bold text-terminal-green text-center mb-8">CHANGE USERNAME</h1>
 
+            <!-- Error message display (if any) -->
             <% if (locals.error) { %>
                 <div class="text-red-500 mb-4 font-mono text-sm text-center">
                     <%= error %>
                 </div>
                 <% } %>
 
+                    <!-- Username change form -->
                     <form action="/updateUsername" method="POST">
+                        <!-- Old username input field -->
                         <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
                             <label for="username" class="text-terminal-light-gray text-sm font-mono">OLD USERNAME:</label>
                             <input type="text" id="username" name="username" value="<%= locals.username || '' %>"
                                 class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
                         </div>
 
+                        <!-- New username input field -->
                         <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
                             <label for="password" class="text-terminal-light-gray text-sm font-mono">NEW USERNAME:</label>
                             <input type="text" id="newuser" name="newuser"
                                 class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
                         </div>
 
+                        <!-- Submit button -->
                         <div class="text-center mt-8">
                             <button type="submit"
                                 class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">UPDATE</button>

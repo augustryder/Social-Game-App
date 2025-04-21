@@ -2,15 +2,20 @@
 
 <div class="flex flex-col min-h-screen">
     <div class="container mx-auto py-8 flex-grow">
+        <!-- Character details card -->
         <div class="bg-terminal-accent p-8 rounded-lg shadow-lg">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <!-- Character info section -->
                 <div>
+                    <!-- Character name -->
                     <h1 class="text-4xl font-bold text-terminal-green mb-4">
                         <%= character.name %>
                     </h1>
+                    <!-- Character description -->
                     <p class="text-terminal-light-gray mb-6">
                         <%= character.description %>
                     </p>
+                    <!-- Character preferences table -->
                     <h2 class="text-2xl font-bold text-terminal-green mb-4">Likes / Dislikes</h2>
                     <table class="table-auto w-full text-terminal-light-gray border-collapse text-sm">
                         <thead>
@@ -24,12 +29,14 @@
                             <% preferences.forEach(preference=> { %>
                                 <tr>
                                     <td class="px-2 py-1">
+                                        <!-- Activity type with icon -->
                                         <span class="activity-name" data-description="<%= preference.type %>">
                                             <img src="/images/<%= preference.type_image %>"
                                                 alt="<%= preference.type %>" class="w-6 h-6 inline-block mr-2">
                                         </span>
                                     </td>
                                     <td class="px-2 py-1">
+                                        <!-- Activity name with tooltip -->
                                         <span class="activity-name"
                                             data-description="<%= preference.description %>">
                                             <%= preference.name %>
@@ -43,6 +50,7 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- Tooltip element for activity descriptions -->
                 <span id="tooltip"
                     class="hidden absolute bg-terminal-accent text-terminal-light-gray text-sm p-2 rounded-lg shadow-lg"></span>
 

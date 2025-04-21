@@ -1,7 +1,9 @@
 <%- include('../partials/header') %>
 
+<!-- Main game screen container -->
 <div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
     <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        <!-- User welcome message -->
         <div class="username-container text-center mb-8">
             <h1 class="text-3xl font-bold text-terminal-green">
                 <% if (username) { %>
@@ -12,19 +14,25 @@
             </h1>
         </div>
 
+        <!-- Game interface -->
         <div class="game-container">
+            <!-- Score display -->
             <div class="text-center mb-2">
                 <h2 class="text-xl font-bold text-terminal-green">Current Score: <span id="current-score">0</span></h2>
             </div>
 
+            <!-- Timer display -->
             <div class="text-center mb-4">
                 <h2 class="text-xl font-bold text-terminal-green">Time Remaining: <span id="countdown-timer">60</span> seconds</h2>
             </div>
+            <!-- Pause button -->
             <button id="pause-button" class="bg-yellow-500 text-white font-bold py-1 px-3 rounded-lg hover:bg-yellow-600 transition ml-2">
                 Pause
             </button>
 
+            <!-- Character circles display -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- First circle -->
                 <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md" data-circle="circle_01">
                     <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_01</div>
                     <div class="circle-content space-y-2">
@@ -32,6 +40,7 @@
                     </div>
                 </div>
 
+                <!-- Second circle -->
                 <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md" data-circle="circle_02">
                     <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_02</div>
                     <div class="circle-content space-y-2">
@@ -39,6 +48,7 @@
                     </div>
                 </div>
 
+                <!-- Third circle -->
                 <div class="circle-box bg-terminal-blue-gray p-6 rounded-lg shadow-md" data-circle="circle_03">
                     <div class="circle-header text-xl font-bold text-terminal-green mb-4">CIRCLE_03</div>
                     <div class="circle-content space-y-2">
@@ -47,6 +57,7 @@
                 </div>
             </div>
 
+            <!-- Game controls form -->
             <div class="text-center mb-4 mt-8">
                 <form id="game-form">
                     <label for="activity-type" class="text-terminal-light-gray font-mono">I WANT TO DO A</label>
@@ -65,6 +76,7 @@
                     </select>
                     <button type="submit" class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition ml-4">GO</button>
                 </form>
+                <!-- Stop game button -->
                 <div class="text-center mt-4">
                     <button id="stop-game" class="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition">[ STOP GAME ]</button>
                 </div>
@@ -84,6 +96,7 @@
             </div>
         </div>
 
+        <!-- Guest mode warning message -->
         <p class="text-terminal-light-gray text-sm font-mono text-center px-4 mt-4">
             <% if (!username) { %>
                 // Playing in guest mode means your progress will NOT be saved! //!
@@ -91,11 +104,11 @@
         </p>
     </div>
 </div>
+
+<!-- Character tooltip that appears on hover -->
 <div id="character-tooltip" class="hidden absolute bg-terminal-blue-gray text-terminal-light-gray text-sm p-3 rounded-lg shadow-lg z-50 max-w-xs"></div>
 
-
-    <%- include('../partials/footer') %>
-
+<%- include('../partials/footer') %>
 
 <script>
     // DOM Elements
@@ -151,6 +164,7 @@
         startCountdown();
     });
 
+    // Toggle game pause state
     function togglePause() {
         isPaused = !isPaused;
         const pauseButton = document.getElementById('pause-button');
@@ -170,6 +184,7 @@
         }
     }
 
+    // Fetch characters and their preferences from the server
     async function fetchGameData() {
         try {
             // Get all characters data
@@ -208,6 +223,7 @@
         }
     }
 
+    // Start the game countdown timer
     function startCountdown() {
         // Clear any existing interval first
         if (gameInterval) {
@@ -220,15 +236,16 @@
             
             // Add warning style when time is running low
             if (timeRemaining <= 10) {
-            countdownTimerElement.classList.add('text-red-500');
+                countdownTimerElement.classList.add('text-red-500');
             }
             
             if (timeRemaining <= 0) {
-            endGame();
+                endGame();
             }
         }, 1000);
     }
 
+    // Shuffle characters into random circles
     function shuffleCharacters() {
         // Reset circles
         circles = {
@@ -255,6 +272,7 @@
         updateCirclesUI();
     }
 
+    // Update the UI to show characters in their circles
     function updateCirclesUI() {
         Object.keys(circles).forEach(circleKey => {
             const circleElement = document.querySelector(`.circle-box[data-circle="${circleKey}"]`);
@@ -281,10 +299,12 @@
         });
     }
 
+    // Hide character tooltip
     function hideCharacterTooltip() {
         document.getElementById('character-tooltip').classList.add('hidden');
     }
 
+    // Show character tooltip with preferences
     function showCharacterTooltip(event) {
         const characterId = parseInt(event.target.dataset.characterId);
         const character = characters.find(c => c.c_id === characterId);
@@ -332,6 +352,7 @@
         tooltip.classList.remove('hidden');
     }
 
+    // Handle activity form submission
     function handleActivitySubmission(event) {
         event.preventDefault();
         
@@ -374,6 +395,7 @@
         }, cooldownTime);
     }
 
+    // Calculate score based on character preferences
     function calculateScore(activityType, selectedCircle) {
         let roundScore = 0;
         
@@ -415,6 +437,7 @@
         return roundScore;
     }
 
+    // Show visual indicator of score change
     function showScoreChangeIndicator(scoreChange) {
         const indicator = document.createElement('div');
         indicator.className = 'absolute text-2xl font-bold';
@@ -451,6 +474,7 @@
         }, 50);
     }
 
+    // End the game and show results
     function endGame() {
         clearInterval(gameInterval);
         gameActive = false;
@@ -474,5 +498,4 @@
         // Show game over modal
         gameOverModal.classList.remove('hidden');
     }
-
 </script>

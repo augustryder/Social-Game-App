@@ -1,9 +1,12 @@
 <%- include('../partials/header') %>
 
+<!-- Main container for centering content -->
 <div class="center-container">
+    <!-- Profile information box -->
     <div class="profile-box">
         <h1>USER_PROFILE</h1>
         
+        <!-- User information section -->
         <div class="profile-section">
             <div class="section-header">USER_DATA</div>
             <div class="profile-data-container">
@@ -26,6 +29,7 @@
             </div>
         </div>
         
+        <!-- Game statistics section -->
         <div class="profile-section">
             <div class="section-header">GAME_STATS</div>
             <div class="profile-data-container">
@@ -42,7 +46,7 @@
         
         <div class="profile-actions">
         
-        
+        <!-- Navigation links and actions -->
         <div class="back-link">
             <a href="/home">> RETURN TO HOME</a>
         </div>
@@ -59,6 +63,7 @@
             </a>
         </div>
     </div>
+    <!-- JavaScript for confirmation dialog when deleting account -->
     <script>
         document.getElementById('delete-account-form').addEventListener('submit', function(event) {
             if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
