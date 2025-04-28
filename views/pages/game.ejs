@@ -25,10 +25,7 @@
             <div class="text-center mb-4">
                 <h2 class="text-xl font-bold text-terminal-green">Time Remaining: <span id="countdown-timer">60</span> seconds</h2>
             </div>
-            <!-- Pause button -->
-            <button id="pause-button" class="bg-yellow-500 text-white font-bold py-1 px-3 rounded-lg hover:bg-yellow-600 transition ml-2">
-                Pause
-            </button>
+            <!-- Pause button removed -->
 
             <!-- Character circles display -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -122,8 +119,7 @@
     const closeModalButton = document.getElementById('close-modal');
     const goHomeButton = document.getElementById('home-modal');
     const stopGame = document.getElementById('stop-game');
-    const pauseGame = document.getElementById('pause-button');
-    let isPaused = false;
+    // Pause button and isPaused removed
 
     // Game state variables
     let gameActive = true;
@@ -155,7 +151,7 @@
                 window.location.href = '/'; // Go back to home page
             }
         });
-        pauseGame.addEventListener('click', togglePause);
+        // Pause button event listener removed
         
         // Fetch character data
         fetchGameData();
@@ -164,25 +160,7 @@
         startCountdown();
     });
 
-    // Toggle game pause state
-    function togglePause() {
-        isPaused = !isPaused;
-        const pauseButton = document.getElementById('pause-button');
-        
-        if (isPaused) {
-            // Pause the game
-            clearInterval(gameInterval);
-            pauseButton.textContent = 'Resume';
-            pauseButton.classList.replace('bg-yellow-500', 'bg-green-500');
-            pauseButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-600');
-        } else {
-            // Resume the game
-            startCountdown();
-            pauseButton.textContent = 'Pause';
-            pauseButton.classList.replace('bg-green-500', 'bg-yellow-500');
-            pauseButton.classList.replace('hover:bg-green-600', 'hover:bg-yellow-600');
-        }
-    }
+    // Toggle game pause state function removed
 
     // Fetch characters and their preferences from the server
     async function fetchGameData() {
