@@ -96,7 +96,7 @@ INSERT INTO activity_type (name, image) VALUES
 ('Entertainment', 'entertainment.png');
 
 INSERT INTO activity_type (name, image) VALUES
-('Sports', 'spots.png');
+('Sports', 'sports.png');
 
 INSERT INTO activity_type (name, image) VALUES
 ('Crafts', 'crafts.png');
