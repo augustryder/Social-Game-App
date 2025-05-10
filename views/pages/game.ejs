@@ -80,7 +80,15 @@
             </div>
         </div>
 
-        <!-- Game Over Modal -->
+        
+        <!-- Guest mode warning message -->
+        <p class="text-terminal-light-gray text-sm font-mono text-center px-4 mt-4">
+            <% if (!username) { %>
+                // Playing in guest mode means your progress will NOT be saved! //!
+            <% } %>
+        </p>
+    </div>
+    <!-- Game Over Modal -->
         <div id="game-over-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
             <div class="bg-terminal-accent p-8 rounded-lg shadow-lg max-w-md w-full">
                 <h2 class="text-3xl font-bold text-terminal-green text-center mb-4">GAME OVER</h2>
@@ -92,14 +100,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Guest mode warning message -->
-        <p class="text-terminal-light-gray text-sm font-mono text-center px-4 mt-4">
-            <% if (!username) { %>
-                // Playing in guest mode means your progress will NOT be saved! //!
-            <% } %>
-        </p>
-    </div>
 </div>
 
 <!-- Character tooltip that appears on hover -->
