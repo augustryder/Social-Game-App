@@ -223,3 +223,12 @@ INSERT INTO preferences (c_id, a_id, value) VALUES
 
 INSERT INTO preferences (c_id, a_id, value) VALUES
 (9, 5, -1); -- Gary dislikes working out
+
+INSERT INTO preferences (c_id, a_id, value) VALUES
+(5, 4, -2); -- Rex hates reading
+
+INSERT INTO preferences (c_id, a_id, value) VALUES
+(6, 3, -1); -- Harvey dislikes clubbing
+
+INSERT INTO preferences (c_id, a_id, value) VALUES
+(3, 8, -1); -- Glorp and Zorp dislike reading tarot cards
