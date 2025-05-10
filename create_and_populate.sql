@@ -195,7 +195,7 @@ INSERT INTO preferences (c_id, a_id, value) VALUES
 (8, 7, 2); -- Eloise loves reading tarot cards
 
 INSERT INTO preferences (c_id, a_id, value) VALUES
-(8, 7, 2); -- Eloise likes tennis
+(8, 13, 2); -- Eloise likes tennis
 
 INSERT INTO preferences (c_id, a_id, value) VALUES
 (9, 4, 2); -- Gary loves reading
