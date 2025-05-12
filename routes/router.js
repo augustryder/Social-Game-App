@@ -221,6 +221,38 @@ router.get('/logout', controller.logout);
 
 /**
  * @swagger
+ * /agreements/tos:
+ *   get:
+ *     summary: Returns the Terms of Service as plain text
+ *     description: Serves the Terms of Service agreement in plain text format.
+ *     produces:
+ *       - text/plain
+ *     responses:
+ *       200:
+ *         description: The Terms of Service text file
+ */
+router.get('/agreements/tos', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/agreements/tos.txt'));
+});
+
+/**
+ * @swagger
+ * /agreements/eula:
+ *   get:
+ *     summary: Returns the End User License Agreement as plain text
+ *     description: Serves the End User License Agreement (EULA) in plain text format.
+ *     produces:
+ *       - text/plain
+ *     responses:
+ *       200:
+ *         description: The EULA text file
+ */
+router.get('/agreements/eula', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/agreements/eula.txt'));
+});
+
+/**
+ * @swagger
  * /updateUsername:
  *   post:
  *     summary: Processes a username change request
