@@ -1,8 +1,8 @@
 </main>
 <footer class="bg-terminal-accent p-4 w-full">
-    <div class="flex justify-between items-center text-terminal-light-gray font-mono">
+    <div class="footer-flex flex justify-between items-center text-terminal-light-gray font-mono">
         <p>&copy; <%= new Date().getFullYear() %> Social Stuff. All rights reserved.</p>
-        <div class="flex space-x-4">
+        <div class="footer-items flex space-x-4">
             <div class="flex items-center space-x-2">
                 <label for="horn-mode" class="text-terminal-light-gray font-mono">HORN MODE</label>
                 <input type="checkbox" id="horn-mode" class="toggle-checkbox">
@@ -11,6 +11,21 @@
             <p>VERSION 0.0.1</p>
         </div>
     </div>
+    <style>
+        @media (max-width: 700px) {
+            .footer-flex {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 1rem;
+            }
+            .footer-items {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.5rem;
+                width: 100%;
+            }
+        }
+    </style>
 </footer>
 </body>
 
