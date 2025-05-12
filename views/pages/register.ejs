@@ -1,54 +1,170 @@
 <%- include('../partials/header') %>
 
-    <!-- Main container with flex layout -->
-    <div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
-        <!-- Registration form container -->
-        <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h1 class="text-3xl font-bold text-terminal-green text-center mb-8">REGISTER</h1>
+<!-- Main container with flex layout -->
+<div class="flex justify-center items-center min-h-screen bg-terminal-blue-gray">
+  <!-- Registration form container -->
+  <div class="bg-terminal-accent p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h1 class="text-3xl font-bold text-terminal-green text-center mb-8">REGISTER</h1>
 
-            <!-- Error message display (if any) -->
-            <% if (locals.error) { %>
-                <div class="text-red-500 mb-4 font-mono text-sm text-center">
-                    <%= error %>
-                </div>
-                <% } %>
-
-                    <!-- Registration form -->
-                    <form action="/register" method="POST">
-                        <!-- Email input field -->
-                        <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
-                            <label for="email" class="text-terminal-light-gray text-sm font-mono">EMAIL:</label>
-                            <input type="text" id="email" name="email" value="<%= locals.email || '' %>"
-                                class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
-                        </div>
-
-                        <!-- Username input field -->
-                        <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
-                            <label for="username" class="text-terminal-light-gray text-sm font-mono">USERNAME:</label>
-                            <input type="text" id="username" name="username" value="<%= locals.username || '' %>"
-                                class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
-                        </div>
-
-                        <!-- Password input field -->
-                        <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
-                            <label for="password" class="text-terminal-light-gray text-sm font-mono">PASSWORD:</label>
-                            <input type="password" id="password" name="password"
-                                class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
-                        </div>
-
-                        <!-- Submit button -->
-                        <div class="text-center mt-8">
-                            <button type="submit"
-                                class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition">REGISTER</button>
-                        </div>
-
-                        <!-- Link to login page -->
-                        <div class="text-center text-terminal-light-gray font-mono mt-4">
-                            <span>ALREADY HAVE AN ACCOUNT?</span>
-                            <a href="/login" class="text-terminal-green hover:underline">LOGIN HERE</a>
-                        </div>
-                    </form>
-        </div>
+    <!-- Error message display (if any) -->
+    <% if (locals.error) { %>
+    <div class="text-red-500 mb-4 font-mono text-sm text-center">
+      <%= error %>
     </div>
+    <% } %>
 
-    <%- include('../partials/footer') %>
+    <!-- Registration form -->
+    <form action="/register" method="POST">
+      <!-- Email input field -->
+      <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
+        <label for="email" class="text-terminal-light-gray text-sm font-mono">EMAIL:</label>
+        <input type="text" id="email" name="email" value="<%= locals.email || '' %>" class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
+      </div>
+
+      <!-- Username input field -->
+      <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
+        <label for="username" class="text-terminal-light-gray text-sm font-mono">USERNAME:</label>
+        <input type="text" id="username" name="username" value="<%= locals.username || '' %>" class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
+      </div>
+
+      <!-- Password input field -->
+      <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
+        <label for="password" class="text-terminal-light-gray text-sm font-mono">PASSWORD:</label>
+        <input type="password" id="password" name="password" class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
+      </div>
+
+      <!-- ToS and EULA Agreement Section -->
+      <div class="mb-4">
+        <!-- ToS -->
+        <div class="flex items-center mb-2">
+          <input type="checkbox" id="tos-checkbox" name="tos" disabled class="mr-2 accent-terminal-green">
+          <label for="tos-checkbox" class="text-terminal-light-gray text-sm font-mono mr-2 select-none">I agree to the</label>
+          <button type="button" id="open-tos-modal" class="text-terminal-green hover:underline font-mono text-sm" style="cursor: pointer;">Terms of Service</button>
+        </div>
+        <!-- EULA -->
+        <div class="flex items-center">
+          <input type="checkbox" id="eula-checkbox" name="eula" disabled class="mr-2 accent-terminal-green">
+          <label for="eula-checkbox" class="text-terminal-light-gray text-sm font-mono mr-2 select-none">I agree to the</label>
+          <button type="button" id="open-eula-modal" class="text-terminal-green hover:underline font-mono text-sm" style="cursor: pointer;">EULA</button>
+        </div>
+      </div>
+
+      <!-- Register button -->
+      <div class="text-center mt-8 flex flex-col items-center">
+        <label for="register-btn" class="text-terminal-light-gray text-sm font-mono mb-2">You must "read" and accept the ToS and EULA before registering.</label>
+        <button id="register-btn" type="submit" class="text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition opacity-50 cursor-not-allowed bg-gray-500" disabled>REGISTER</button>
+      </div>
+
+      <!-- Link to login page -->
+      <div class="text-center text-terminal-light-gray font-mono mt-4">
+        <span>ALREADY HAVE AN ACCOUNT?</span>
+        <a href="/login" class="text-terminal-green hover:underline">LOGIN HERE</a>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<!-- ToS Modal -->
+<div id="tos-modal" style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 999; background: rgba(0,0,0,0.7);" class="hidden">
+  <div style="background: #222; color: #fff; padding: 2rem; border-radius: 1rem; width: 28rem; max-width: 100vw; max-height: 90%; overflow-y: scroll; ">
+    <h2 class="text-xl font-bold mb-4 text-terminal-green">Terms of Service</h2>
+    <div id="tos-content" class="h-[16rem] mb-4 p-2 border border-terminal-light-gray rounded">
+      <!-- ToS text will be loaded here -->
+    </div>
+    <button type="button" id="tos-agree" class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg mb-2 opacity-50 cursor-not-allowed">Agree</button>
+    <button type="button" id="tos-close" class="text-terminal-light-gray underline">Close</button>
+  </div>
+</div>
+
+<!-- EULA Modal -->
+<div id="eula-modal" style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 999; background: rgba(0,0,0,0.7);" class="hidden">
+  <div style="background: #222; color: #fff; padding: 2rem; border-radius: 1rem; width: 28rem; max-width: 100vw; max-height: 90%; overflow-y: scroll; ">
+    <h2 class="text-xl font-bold mb-4 text-terminal-green">End User License Agreement</h2>
+    <div id="eula-content" class="h-[16rem] mb-4 p-2 border border-terminal-light-gray rounded">
+      <!-- EULA text will be loaded here -->
+    </div>
+    <button type="button" id="eula-agree" class="bg-terminal-green text-terminal-blue-gray font-bold py-2 px-4 rounded-lg mb-2 opacity-50 cursor-not-allowed">Agree</button>
+    <button type="button" id="eula-close" class="text-terminal-light-gray underline">Close</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Modal logic for ToS and EULA
+    const tosModal = document.getElementById('tos-modal');
+    const eulaModal = document.getElementById('eula-modal');
+    const openTosBtn = document.getElementById('open-tos-modal');
+    const openEulaBtn = document.getElementById('open-eula-modal');
+    const tosClose = document.getElementById('tos-close');
+    const eulaClose = document.getElementById('eula-close');
+    const tosAgree = document.getElementById('tos-agree');
+    const eulaAgree = document.getElementById('eula-agree');
+    const tosCheckbox = document.getElementById('tos-checkbox');
+    const eulaCheckbox = document.getElementById('eula-checkbox');
+    const registerBtn = document.getElementById('register-btn');
+    const tosContent = document.getElementById('tos-content');
+    const eulaContent = document.getElementById('eula-content');
+
+    // Helper to check if both agreements are checked
+    function updateRegisterBtn() {
+      if (tosCheckbox.checked && eulaCheckbox.checked) {
+        registerBtn.disabled = false;
+        registerBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-500');
+        registerBtn.classList.add('bg-terminal-green');
+      } else {
+        registerBtn.disabled = true;
+        registerBtn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-500');
+        registerBtn.classList.remove('bg-terminal-green');
+      }
+    }
+
+    // Open ToS Modal
+    openTosBtn?.addEventListener('click', () => {
+      fetch('/agreements/tos.txt')
+        .then(res => res.text())
+        .then(text => {
+          tosContent.innerHTML = text.replace(/\n/g, '<br>'); // Replace newlines with <br>
+          tosContent.scrollTop = 0; // Reset scroll position
+        });
+      tosModal.classList.remove('hidden'); // Show the modal
+      tosCheckbox.disabled = false;
+      tosAgree.classList.remove('opacity-50', 'cursor-not-allowed');
+    });
+
+    // Open EULA Modal
+    openEulaBtn?.addEventListener('click', () => {
+      fetch('/agreements/eula.txt')
+        .then(res => res.text())
+        .then(text => {
+          eulaContent.innerHTML = text.replace(/\n/g, '<br>'); // Replace newlines with <br>
+          eulaContent.scrollTop = 0; // Reset scroll position
+        });
+      eulaModal.classList.remove('hidden'); // Show the modal
+      eulaCheckbox.disabled = false;
+      eulaAgree.classList.remove('opacity-50', 'cursor-not-allowed');
+    });
+
+    // Close modals
+    tosClose?.addEventListener('click', () => tosModal.classList.add('hidden'));
+    eulaClose?.addEventListener('click', () => eulaModal.classList.add('hidden'));
+
+    // When user agrees, check the box and close modal
+    tosAgree?.addEventListener('click', () => {
+      tosCheckbox.checked = true;
+      tosModal.classList.add('hidden');
+      updateRegisterBtn();
+    });
+    eulaAgree?.addEventListener('click', () => {
+      eulaCheckbox.checked = true;
+      eulaModal.classList.add('hidden');
+      updateRegisterBtn();
+    });
+
+    // Prevent manual checking (no cheating!)
+    tosCheckbox?.addEventListener('click', e => e.preventDefault());
+    eulaCheckbox?.addEventListener('click', e => e.preventDefault());
+    updateRegisterBtn();
+  });
+</script>
+<%- include('../partials/footer') %>
