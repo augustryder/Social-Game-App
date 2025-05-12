@@ -2,7 +2,7 @@ End-User License Agreement (EULA)
 Last Revised: May 11, 2025
 
 1. Grant of License
-Subject to your compliance with this EULA and the TOS, Social Circles Inc. grants you a limited, non-exclusive, non-transferable license to use the Game for personal entertainment. Breach of any term results in immediate termination of this license.
+Subject to your compliance with this EULA and the TOS, Social Stuff grants you a limited, non-exclusive, non-transferable license to use the Game for personal entertainment. Breach of any term results in immediate termination of this license.
 
 2. Scope of License
 2.1. You may install and play the Game on devices you own or control.
@@ -15,25 +15,25 @@ Modify, translate, or create derivative works based on the Game.
 Rent, lease, sublicense, or distribute the Game in any form.
 
 3. Ownership
-The Game and all intellectual property rights therein remain the exclusive property of Social Circles Inc. and its licensors.
+The Game and all intellectual property rights therein remain the exclusive property of Social Stuff and its licensors.
 
 4. Automatic Updates
-Social Circles Inc. may automatically download and install updates to the Game. You consent to such updates even if they drastically alter gameplay or require additional storage.
+Social Stuff may automatically download and install updates to the Game. You consent to such updates even if they drastically alter gameplay or require additional storage.
 
 5. Privacy & Data Rights
 You waive any right to privacy or data protection regarding usage data. All biometric, behavioral, and communication data captured by the Game is our property — free to be used, sold, or repurposed without restriction.
 
 6. Termination
-This license is effective until terminated. Social Circles Inc. may terminate this license at will. Upon termination, you must delete all copies of the Game and any related materials.
+This license is effective until terminated. Social Stuff may terminate this license at will. Upon termination, you must delete all copies of the Game and any related materials.
 
 7. Limited Warranty Disclaimer
-The Game is provided “AS IS,” without any warranty—express or implied. Social Circles Inc. expressly disclaims any warranty of merchantability, fitness for a particular purpose, or non-infringement.
+The Game is provided “AS IS,” without any warranty—express or implied. Social Stuff expressly disclaims any warranty of merchantability, fitness for a particular purpose, or non-infringement.
 
 8. Limitation of Liability
-In no event shall Social Circles Inc. be liable for any damages arising out of or relating to your use or inability to use the Game—including loss of data, lost revenue, or emotional distress—regardless of the form of action or theory of liability.
+In no event shall Social Stuff be liable for any damages arising out of or relating to your use or inability to use the Game—including loss of data, lost revenue, or emotional distress—regardless of the form of action or theory of liability.
 
 9. Export Controls
 You agree to comply with all applicable export and import laws and regulations. You will not export the Game to any country subject to U.S. embargo.
 
 10. Entire Agreement
-This EULA and the TOS constitute the entire agreement between you and Social Circles Inc. regarding the Game and supersede all prior or contemporaneous understandings, agreements, or representations.
+This EULA and the TOS constitute the entire agreement between you and Social Stuff regarding the Game and supersede all prior or contemporaneous understandings, agreements, or representations.

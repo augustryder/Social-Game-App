@@ -33,6 +33,13 @@
         <input type="password" id="password" name="password" class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
       </div>
 
+      <!-- Confirm-Password input field -->
+      <div class="bg-terminal-blue-gray p-4 rounded-lg mb-4">
+        <label for="confirm-password" class="text-terminal-light-gray text-sm font-mono">CONFIRM PASSWORD:</label>
+        <input type="password" id="confirm-password" name="confirm-password" class="bg-transparent border-none text-terminal-light-gray font-mono text-sm ml-2 outline-none w-full">
+        <span id="password-match-msg" class="text-red-500 text-xs font-mono ml-2 hidden">Passwords do not match</span>
+      </div>
+
       <!-- ToS and EULA Agreement Section -->
       <div class="mb-4">
         <!-- ToS -->
@@ -51,7 +58,7 @@
 
       <!-- Register button -->
       <div class="text-center mt-8 flex flex-col items-center">
-        <label for="register-btn" class="text-terminal-light-gray text-sm font-mono mb-2">You must "read" and accept the ToS and EULA before registering.</label>
+        <p class="text-terminal-light-gray text-sm font-mono mb-2">You must "read" and accept the ToS and EULA before registering.</p>
         <button id="register-btn" type="submit" class="text-terminal-blue-gray font-bold py-2 px-4 rounded-lg hover:bg-terminal-light-gray transition opacity-50 cursor-not-allowed bg-gray-500" disabled>REGISTER</button>
       </div>
 
@@ -105,17 +112,31 @@
     const registerBtn = document.getElementById('register-btn');
     const tosContent = document.getElementById('tos-content');
     const eulaContent = document.getElementById('eula-content');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm-password');
+    const passwordMatchMsg = document.getElementById('password-match-msg');
 
-    // Helper to check if both agreements are checked
+    // Helper to check if passwords match
+    function passwordsMatch() {
+      return password.value === confirmPassword.value && password.value.length > 0;
+    }
+
+    // Helper to check if both agreements are checked - enable register button if both are checked and matching password is confirmed
     function updateRegisterBtn() {
-      if (tosCheckbox.checked && eulaCheckbox.checked) {
+      if (tosCheckbox.checked && eulaCheckbox.checked && passwordsMatch()) {
         registerBtn.disabled = false;
-        registerBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-500');
-        registerBtn.classList.add('bg-terminal-green');
+        registerBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-500', 'hover:bg-terminal-light-gray');
+        registerBtn.classList.add('bg-terminal-green', 'hover:bg-terminal-light-gray');
       } else {
         registerBtn.disabled = true;
         registerBtn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-500');
-        registerBtn.classList.remove('bg-terminal-green');
+        registerBtn.classList.remove('bg-terminal-green', 'hover:bg-terminal-light-gray');
+      }
+
+      if (!passwordsMatch() && confirmPassword.value.length > 0) {
+        passwordMatchMsg.classList.remove('hidden');
+      } else {
+        passwordMatchMsg.classList.add('hidden');
       }
     }
 
@@ -161,9 +182,11 @@
       updateRegisterBtn();
     });
 
-    // Prevent manual checking (no cheating!)
+    // Prevent manual checkbox-checking (no skipping!)
     tosCheckbox?.addEventListener('click', e => e.preventDefault());
     eulaCheckbox?.addEventListener('click', e => e.preventDefault());
+    password.addEventListener('input', updateRegisterBtn);
+    confirmPassword.addEventListener('input', updateRegisterBtn);
     updateRegisterBtn();
   });
 </script>
