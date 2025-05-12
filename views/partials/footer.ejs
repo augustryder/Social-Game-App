@@ -1,32 +1,77 @@
 </main>
 <footer class="bg-terminal-accent p-4 w-full">
-    <div class="footer-flex flex justify-between items-center text-terminal-light-gray font-mono">
-        <p>&copy; <%= new Date().getFullYear() %> Social Stuff. All rights reserved.</p>
-        <div class="footer-items flex space-x-4">
-            <div class="flex items-center space-x-2">
-                <label for="horn-mode" class="text-terminal-light-gray font-mono">HORN MODE</label>
-                <input type="checkbox" id="horn-mode" class="toggle-checkbox">
-            </div>
-            <p>SYSTEM STATUS: <span class="text-terminal-green">ONLINE</span></p>
-            <p>VERSION 0.0.1</p>
-        </div>
+  <div class="footer-flex flex justify-between items-center text-terminal-light-gray font-mono">
+    <p>&copy; <%= new Date().getFullYear() %> Social Stuff. All rights reserved.</p>
+    <div class="footer-items flex space-x-4">
+      <div class="flex items-center space-x-2">
+        <label for="horn-mode" class="text-terminal-light-gray font-mono">HORN MODE</label>
+        <input type="checkbox" id="horn-mode" class="toggle-checkbox">
+      </div>
+      <p>SYSTEM STATUS: <span class="text-terminal-green">ONLINE</span></p>
+      <p>VERSION 0.0.1</p>
     </div>
-    <style>
-        @media (max-width: 700px) {
-            .footer-flex {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 1rem;
-            }
-            .footer-items {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 0.5rem;
-                width: 100%;
-            }
-        }
-    </style>
+  </div>
+  <style>
+    @media (max-width: 700px) {
+      .footer-flex {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem;
+      }
+
+      .footer-items {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem;
+        width: 100%;
+      }
+    }
+  </style>
 </footer>
 </body>
+<script>
+  // Horn button functionality
+  const hornButton = document.getElementById('horn-mode');
+
+  const hornImage = new Image();
+  hornImage.src = '/images/drhorn.jpg';
+
+  const wow = new Audio();
+  wow.src = '/sounds/wow.mp3';
+
+  hornButton.addEventListener('change', () => {
+    if (event.target.checked) { //only trigger when activated, not when deactivated
+
+      //Sound stuff
+      const hornSound = new Audio(wow.src);
+      hornSound.play();
+
+      //Image stuff
+      const hornImage = document.createElement('img');
+      hornImage.src = '/images/drhorn.jpg';
+      hornImage.alt = 'Horn';
+      hornImage.style.position = 'fixed';
+      hornImage.style.width = '400px';
+      hornImage.style.height = '400px';
+      hornImage.style.left = `-500px`;
+      hornImage.style.bottom = `-500px`;
+      document.body.appendChild(hornImage);
+
+      //Arc
+      let angle = 180;
+      const interval = setInterval(() => {
+        angle += 1;
+        const x = Math.cos(angle * Math.PI / 180) * window.innerWidth / 2 + window.innerWidth / 2 - 200;
+        const y = Math.sin(angle * Math.PI / 180) * window.innerHeight + window.innerHeight;
+        hornImage.style.left = `${x}px`;
+        hornImage.style.top = `${y}px`;
+        if (angle >= 360) {
+          clearInterval(interval);
+          document.body.removeChild(hornImage);
+        }
+      }, 15);
+    }
+  });
+</script>
 
 </html>
