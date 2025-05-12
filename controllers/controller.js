@@ -69,6 +69,17 @@ async function register(req, res) {
                 username
             });
         }
+        
+        // Rudimentary email format check
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // basically: "string" + "@" + "string" + "." + "string"
+        if (!emailRegex.test(email)) {
+            return res.render('pages/register', {
+                error: 'Please enter a valid email address',
+                email,
+                username
+            });
+        }
+        
         // Check if email already exists
         const [emailCheck] = await connection.query(
             'SELECT * FROM users WHERE email = ?',
