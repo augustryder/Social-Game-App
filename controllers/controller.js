@@ -39,6 +39,22 @@ async function showLogin(req, res) {
 }
 
 /**
+ * Renders the instructions page
+ */
+async function showInstructions(req, res) {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Connection made to database!!');
+        res.render('pages/instructions');
+        connection.release();
+    } catch (err) {
+        console.log(err);
+        res.send('An error occurred');
+        throw err;
+    }
+}
+
+/**
  * Renders the registration page
  */
 async function showRegister(req, res) {
@@ -560,6 +576,7 @@ module.exports = {
     home,
     showLogin,
     showRegister,
+    showInstructions,
     register,
     login,
     logout,

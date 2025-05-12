@@ -41,6 +41,18 @@ router.get('/login', controller.showLogin);
 
 /**
  * @swagger
+ * /instructions:
+ *   get:
+ *     summary: Renders the instructions page
+ *     description: Displays the instructions on how to play the game
+ *     responses:
+ *       200:
+ *         description: Instructions page rendered successfully
+ */
+router.get('/instructions', controller.showInstructions);
+
+/**
+ * @swagger
  * /register:
  *   get:
  *     summary: Renders the registration page
